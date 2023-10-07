@@ -1,6 +1,7 @@
 import useMutation from "../../../hooks/useMutation.tsx";
 import register from "../services/register.ts";
 import { useEffect, useState } from "react";
+import Button from "../../../components/inputs/Button.tsx";
 
 function Register() {
   const [count, setCount] = useState(0);
@@ -26,7 +27,7 @@ function Register() {
   return (
     <div>
       <>register screen</>
-      <button onClick={() => setCount(count + 1)}>Click me</button>
+      <Button onClick={() => setCount(count + 1)} label="Click me!" />
     </div>
   );
 }
