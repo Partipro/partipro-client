@@ -1,4 +1,4 @@
-import useService from "./hooks/useService.tsx";
+import useService from "./hooks/useQuery.tsx";
 import request from "./helpers/request.ts";
 
 type Response = { name: string; email: string };
