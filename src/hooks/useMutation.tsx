@@ -8,10 +8,10 @@ function useMutation<R, D>({
   onSuccess,
   onError,
 }: {
-  service: (data: D) => Promise<R>;
+  service: (data: R) => Promise<D>;
   onSuccess?: () => void;
   onError?: (error?: { message: string; name: string }) => void;
-}): [UseMutationResult<R, unknown, D, unknown>] {
+}): [UseMutationResult<D, unknown, R, unknown>] {
   const mutation = reactuseMutation({
     mutationFn: service,
     onSuccess,
