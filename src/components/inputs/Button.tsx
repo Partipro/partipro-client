@@ -9,15 +9,17 @@ type Props = {
   endIcon?: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
+  htmlType?: "submit" | "button";
 };
 
 function Button({
   variant = "contained",
   label,
+  htmlType = "button",
   ...props
 }: Props): React.ReactNode {
   return (
-    <MuiButton variant={variant} {...props}>
+    <MuiButton {...props} type={htmlType} variant={variant}>
       {label}
     </MuiButton>
   );
