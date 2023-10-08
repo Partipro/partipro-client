@@ -11,7 +11,6 @@ function register(props: Props): Promise<{ token: string }> {
     url: "auth/register",
     method: "POST",
     data: props,
-    withCredentials: false,
   });
 }
 

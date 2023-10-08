@@ -17,13 +17,12 @@ axiosRetry(axios, {
 export default async function request<T>({
   headers,
   url,
-  withCredentials = true,
   ...rest
 }: AxiosRequestConfig): Promise<T> {
   try {
     const response = await axios.request<T>({
       url: `http://localhost:8000/api/v1/${url}`,
-      withCredentials,
+      withCredentials: true,
       ...rest,
     });
     return response.data;
