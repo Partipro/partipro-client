@@ -14,7 +14,7 @@ type Props = {
 };
 
 function TextField({ type = "text", ...props }: Props) {
-  return <MuiTextField type={type} {...props} />;
+  return <MuiTextField type={type} variant="standard" {...props} />;
 }
 
 export default TextField;
