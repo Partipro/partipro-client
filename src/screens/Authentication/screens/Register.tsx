@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+  EmailOutlined,
+  LockOutlined,
+  PersonOutline,
+} from "@mui/icons-material";
 import register from "../services/register.ts";
 import useMutation from "../../../hooks/useMutation.tsx";
 import Stack from "../../../components/layout/Stack.tsx";
@@ -8,6 +13,9 @@ import useForm from "../../../hooks/useForm.tsx";
 import { required, validateEmail } from "../../../helpers/validations.ts";
 import { compact } from "lodash";
 import Snackbar from "../../../components/feedback/Snackbar.tsx";
+import AuthenticationWrapper from "../components/AuthenticationWrapper.tsx";
+import { Title } from "../../../components/data-display/Typography.tsx";
+import FlexColumn from "../../../components/layout/FlexColumn.tsx";
 
 const SNACKBAR_INITIAL_STATE: {
   isOpen: boolean;
@@ -53,44 +61,64 @@ function Register() {
   });
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <Stack>
-          <TextField
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            helperText={formik.touched.name ? formik.errors.name : ""}
-            name="name"
-            label="Name"
+    <AuthenticationWrapper>
+      <FlexColumn
+        sx={{
+          width: "100%",
+          maxWidth: "500px",
+          minWidth: "250px",
+        }}
+      >
+        <FlexColumn sx={{ marginBottom: "40px" }}>
+          <Title label="Crie sua conta" level={1} />
+          <Title
+            secondary
+            label="preencha seus dados"
+            weight="normal"
+            level={4}
           />
-          <TextField
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            name="email"
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            type="email"
-            label="Email"
-            helperText={formik.touched.email ? formik.errors.email : ""}
-          />
-          <TextField
-            value={formik.values.password}
-            name="password"
-            onChange={formik.handleChange}
-            type="password"
-            helperText={formik.touched.password ? formik.errors.password : ""}
-            label="Password"
-            error={formik.touched.password && Boolean(formik.errors.password)}
-          />
-          <Button label="Submit" htmlType="submit" />
-        </Stack>
-      </form>
+        </FlexColumn>
+        <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
+          <Stack spacing={4}>
+            <TextField
+              icon={<PersonOutline />}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              helperText={formik.touched.name ? formik.errors.name : ""}
+              name="name"
+              label="Name"
+            />
+            <TextField
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              name="email"
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              type="email"
+              label="Email"
+              icon={<EmailOutlined />}
+              helperText={formik.touched.email ? formik.errors.email : ""}
+            />
+            <TextField
+              value={formik.values.password}
+              name="password"
+              onChange={formik.handleChange}
+              icon={<LockOutlined />}
+              type="password"
+              helperText={formik.touched.password ? formik.errors.password : ""}
+              label="Password"
+              error={formik.touched.password && Boolean(formik.errors.password)}
+            />
+            <Button label="Cadastre-se" htmlType="submit" />
+          </Stack>
+        </form>
+      </FlexColumn>
       <Snackbar
         type={snackbar.type}
         open={snackbar.isOpen}
         message={snackbar.message}
       />
-    </div>
+    </AuthenticationWrapper>
   );
 }
 
