@@ -1,15 +1,17 @@
-import { createBrowserRouter } from "react-router-dom";
-import Register from "./screens/Authentication/screens/Register.tsx";
-import App from "./App.tsx";
+import { lazy } from "react";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+const Register = lazy(
+  () => import("./screens/Authentication/screens/Register.tsx"),
+);
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
-  },
-  {
     path: "/auth/register",
     element: <Register />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/auth/register" replace />,
   },
 ]);
 
