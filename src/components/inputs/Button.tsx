@@ -1,5 +1,5 @@
-import MuiButton from "@mui/material/Button";
 import React from "react";
+import MuiButton from "@mui/material/Button";
 
 type Props = {
   variant?: "text" | "contained" | "outlined";
@@ -10,16 +10,18 @@ type Props = {
   loading?: boolean;
   disabled?: boolean;
   htmlType?: "submit" | "button";
+  type?: "primary" | "secondary" | "success" | "info";
 };
 
 function Button({
   variant = "contained",
   label,
   htmlType = "button",
+  type = "primary",
   ...props
 }: Props): React.ReactNode {
   return (
-    <MuiButton {...props} type={htmlType} variant={variant}>
+    <MuiButton {...props} color={type} type={htmlType} variant={variant}>
       {label}
     </MuiButton>
   );
