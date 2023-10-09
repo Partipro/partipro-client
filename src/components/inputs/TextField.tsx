@@ -1,5 +1,6 @@
 import MuiTextField from "@mui/material/TextField";
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
+import { InputAdornment } from "@mui/material";
 
 type Props = {
   type?: "password" | "email" | "text";
@@ -11,10 +12,26 @@ type Props = {
   error?: boolean;
   id?: string;
   helperText?: string;
+  icon?: React.ReactNode;
 };
 
-function TextField({ type = "text", ...props }: Props) {
-  return <MuiTextField type={type} variant="standard" {...props} />;
+function TextField({ type = "text", icon, ...props }: Props) {
+  return (
+    <MuiTextField
+      type={type}
+      InputProps={
+        icon
+          ? {
+              startAdornment: (
+                <InputAdornment position="start">{icon}</InputAdornment>
+              ),
+            }
+          : {}
+      }
+      variant="standard"
+      {...props}
+    />
+  );
 }
 
 export default TextField;
