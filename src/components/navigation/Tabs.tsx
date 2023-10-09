@@ -1,5 +1,5 @@
 import React from "react";
-import Tabs from "@mui/material/Tabs";
+import MuiTabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 type Props<V> = {
@@ -12,16 +12,27 @@ type Props<V> = {
     onChange?: (e: React.FormEvent<HTMLDivElement>) => void;
     onClick?: (e: React.FormEvent<HTMLDivElement>) => void;
   }[];
+  orientation?: "vertical" | "horizontal";
 };
 
-function VerticalTabs<V>({ variant = "scrollable", tabs, ...props }: Props<V>) {
+function Tabs<V>({
+  variant = "scrollable",
+  orientation = "vertical",
+  tabs,
+  ...props
+}: Props<V>) {
   return (
-    <Tabs orientation="vertical" variant={variant} {...props}>
+    <MuiTabs orientation={orientation} variant={variant} {...props}>
       {tabs.map((tab, i) => (
-        <Tab {...tab} tabIndex={i} />
+        <Tab
+          key={tab.value as string}
+          sx={{ padding: "14px 30px" }}
+          {...tab}
+          tabIndex={i}
+        />
       ))}
-    </Tabs>
+    </MuiTabs>
   );
 }
 
-export default VerticalTabs;
+export default Tabs;
