@@ -1,22 +1,29 @@
-import useService from "./hooks/useQuery.tsx";
-import request from "./helpers/request.ts";
+import { Suspense } from "react";
+import { RouterProvider } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material";
 
-type Response = { name: string; email: string };
+import router from "./routes.tsx";
+import { COLORS } from "./constants";
 
-const getUsers = (): Promise<Response[]> => {
-  return request<Response[]>({
-    url: "users",
-    withCredentials: false,
-  });
-};
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: COLORS.PRIMARY,
+    },
+    secondary: {
+      main: "#E33E7F",
+    },
+  },
+});
 
 function App() {
-  const [loading, data] = useService({
-    service: getUsers,
-  });
-
-  console.log(loading);
-  return <div>{data?.map((d) => d.name)}oioio</div>;
+  return (
+    <ThemeProvider theme={theme}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </ThemeProvider>
+  );
 }
 
 export default App;
