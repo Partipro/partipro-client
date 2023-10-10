@@ -16,6 +16,7 @@ import Snackbar from "../../../components/feedback/Snackbar.tsx";
 import AuthenticationWrapper from "../components/AuthenticationWrapper.tsx";
 import { Title } from "../../../components/data-display/Typography.tsx";
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
+import { useAuth } from "../../../context/AuthContext.tsx";
 
 const SNACKBAR_INITIAL_STATE: {
   isOpen: boolean;
@@ -28,12 +29,14 @@ const SNACKBAR_INITIAL_STATE: {
 };
 
 function Register() {
+  const { handleFetchUser } = useAuth();
+
   const [snackbar, setSnackbar] = useState(SNACKBAR_INITIAL_STATE);
 
   const [doRegister] = useMutation({
     service: register,
     onSuccess: () => {
-      console.log("success");
+      handleFetchUser();
     },
     onError: (error) => {
       setSnackbar({
