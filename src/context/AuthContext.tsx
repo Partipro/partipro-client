@@ -6,13 +6,13 @@ import getUser from "../services/user/getUser.ts";
 type AuthContextProps = {
   isAuthenticated: boolean;
   user?: User;
-  // handleFetchProfile: () => void;
+  handleFetchUser: () => void;
   // logout: () => void;
 };
 
 const AuthContext = React.createContext<AuthContextProps>({
   isAuthenticated: false,
-  // handleFetchProfile: () => false,
+  handleFetchUser: () => false,
   // logout: () => false,
 });
 
@@ -21,7 +21,14 @@ type AuthContextProviderProps = { children: React.ReactNode };
 function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const [isFetchingUser, user, isUserSuccess, isUserError] = useQuery({
+  const {
+    isLoading: isFetchingUser,
+    refetch: fetchUser,
+    data: user,
+    isSuccess: isUserSuccess,
+    isError: isUserError,
+  } = useQuery({
+    autoStart: false,
     service: getUser,
   });
 
@@ -42,12 +49,17 @@ function AuthContextProvider({ children }: AuthContextProviderProps) {
     if (isUserError) {
       setIsAuthenticated(false);
     }
-  }, [isUserSuccess]);
+  }, [isUserSuccess, isUserError]);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const value = useMemo(
     () => ({
       isAuthenticated,
       user,
+      handleFetchUser: fetchUser,
     }),
     [isAuthenticated, isFetchingUser, user],
   );
