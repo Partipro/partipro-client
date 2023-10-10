@@ -6,13 +6,13 @@ function useQuery<R, F>({
 }: {
   queryKey?: [keyof F, F[keyof F]];
   service: (filters?: F[keyof F]) => Promise<R>;
-}): [boolean, R | undefined, any] {
-  const { isLoading, data, error } = reactUseQuery({
+}): [boolean, R | undefined, boolean, boolean, any] {
+  const { isLoading, data, isSuccess, isError, error } = reactUseQuery({
     queryKey: [queryKey],
     queryFn: () => service(queryKey?.[1]),
   });
 
-  return [isLoading, data, error];
+  return [isLoading, data, isSuccess, isError, error];
 }
 
 export default useQuery;
