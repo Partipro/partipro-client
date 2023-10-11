@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Contracts from "./screens/Contracts/screens/Contracts.tsx";
+import MenuContent from "./components/others/MenuContent.tsx";
 
 const Login = lazy(() => import("./screens/Authentication/screens/Login.tsx"));
 const Register = lazy(
@@ -24,8 +25,13 @@ const authRoutes = createBrowserRouter([
 
 const protectedRoutes = createBrowserRouter([
   {
-    path: "/contracts",
-    element: <Contracts />,
+    element: <MenuContent />,
+    children: [
+      {
+        path: "/contracts",
+        element: <Contracts />,
+      },
+    ],
   },
   {
     path: "*",

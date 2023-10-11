@@ -50,10 +50,10 @@ const theme = createTheme({
       fontSize: 9,
     },
     small: {
-      fontSize: 11,
+      fontSize: 12,
     },
     medium: {
-      fontSize: 13,
+      fontSize: 14,
     },
     large: {
       fontSize: 16,
@@ -85,15 +85,22 @@ function Text({ size = "medium", secondary, weight = "normal", label }: Props) {
 type TitleProps = {
   level?: 1 | 2 | 3 | 4;
   label: string;
-  secondary?: boolean;
+  type?: "dark" | "secondary" | "light";
   weight?: "normal" | "strong" | "medium";
 };
 
-function Title({ level = 1, secondary, weight = "strong", label }: TitleProps) {
+function Title({
+  level = 1,
+  type = "dark",
+  weight = "strong",
+  label,
+}: TitleProps) {
   return (
     <ThemeProvider theme={theme}>
       <Typography
-        color={secondary ? "#A5A5A5" : "#000000"}
+        color={
+          { secondary: "#A5A5A5", dark: "#000000", light: "#ffffff" }[type]
+        }
         fontWeight={{ medium: 500, strong: 700, normal: 400 }[weight]}
         variant={
           { 1: "h1", 2: "h2", 3: "h3", 4: "h4" }[level] as

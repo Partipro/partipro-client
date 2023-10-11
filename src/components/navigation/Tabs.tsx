@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSXElementConstructor, ReactElement } from "react";
 import MuiTabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
@@ -9,6 +9,7 @@ type Props<V> = {
   tabs: {
     label: string;
     value: V;
+    icon?: string | ReactElement<any, string | JSXElementConstructor<any>>;
     onChange?: (e: React.FormEvent<HTMLDivElement>) => void;
     onClick?: (e: React.FormEvent<HTMLDivElement>) => void;
   }[];
@@ -27,6 +28,7 @@ function Tabs<V>({
         <Tab
           key={tab.value as string}
           sx={{ padding: "14px 30px" }}
+          iconPosition="start"
           {...tab}
           tabIndex={i}
         />

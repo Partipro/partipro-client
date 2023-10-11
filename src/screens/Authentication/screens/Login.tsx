@@ -70,7 +70,7 @@ function Login() {
         <FlexColumn sx={{ marginBottom: "40px" }}>
           <Title label="Entre na sua conta" level={1} />
           <Title
-            secondary
+            type="secondary"
             label="preencha seus dados"
             weight="normal"
             level={4}

@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { authRoutes, protectedRoutes } from "./routes.tsx";
 import { COLORS } from "./constants";
 import { useAuth } from "./context/AuthContext.tsx";
+import FlexRow from "./components/layout/FlexRow.tsx";
 
 const theme = createTheme({
   palette: {
@@ -17,14 +18,24 @@ const theme = createTheme({
   },
 });
 
+function ProtectedApp() {
+  return (
+    <FlexRow>
+      <RouterProvider router={protectedRoutes} />
+    </FlexRow>
+  );
+}
+
 function App() {
   const { isAuthenticated } = useAuth();
   return (
     <ThemeProvider theme={theme}>
       <Suspense fallback={<div>Loading...</div>}>
-        <RouterProvider
-          router={isAuthenticated ? protectedRoutes : authRoutes}
-        />
+        {isAuthenticated ? (
+          <ProtectedApp />
+        ) : (
+          <RouterProvider router={authRoutes} />
+        )}
       </Suspense>
     </ThemeProvider>
   );
