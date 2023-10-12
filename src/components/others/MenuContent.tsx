@@ -32,7 +32,7 @@ function MenuContent() {
   const [currentTab, setCurrentTab] = useState(
     location.pathname.split("/")[1] || "contract",
   );
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(isDesktop);
 
   const currentRoute = location.pathname.split("/")[1];
 
@@ -41,22 +41,30 @@ function MenuContent() {
       {
         label: "Contratos",
         value: "contracts",
-        Icon: <DescriptionOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <DescriptionOutlinedIcon sx={{ color }} />
+        ),
       },
       {
         label: "Imóveis",
         value: "properties",
-        Icon: <HomeWorkOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <HomeWorkOutlinedIcon sx={{ color }} />
+        ),
       },
       {
         label: "Financeiro",
         value: "finances",
-        Icon: <AttachMoneyOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <AttachMoneyOutlinedIcon sx={{ color }} />
+        ),
       },
       {
         label: "Simuladores",
         value: "simulators",
-        Icon: <CalculateOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <CalculateOutlinedIcon sx={{ color }} />
+        ),
       },
     ];
   }, []);
@@ -80,6 +88,9 @@ function MenuContent() {
       <AppBar
         position="fixed"
         open={open}
+        titleIcon={menus
+          .find((menu) => menu.value === currentRoute)
+          ?.icon({ color: COLORS.PRIMARY })}
         label={menus.find((menu) => menu.value === currentRoute)?.label || ""}
         action={
           !open && (
@@ -113,14 +124,14 @@ function MenuContent() {
         <Divider />
         <List
           datasource={menus}
-          renderItems={({ label, Icon, value }) => (
+          renderItems={({ label, icon, value }) => (
             <List.ItemButton
               selected={currentTab === value}
               open={open}
               onClick={() => handleTabChange(value)}
               key={value}
             >
-              <List.ItemIcon icon={Icon} open={open} />
+              <List.ItemIcon icon={icon({})} open={open} />
               {open && <Text weight="medium" type="light" label={label} />}
             </List.ItemButton>
           )}
