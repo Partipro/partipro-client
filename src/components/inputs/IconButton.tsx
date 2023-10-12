@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
   type?: "primary" | "secondary" | "success" | "info" | "inherit";
   size?: "small" | "medium" | "large";
-  edge?: "start" | "end" | boolean;
+  edge?: false | "start" | "end" | undefined;
 };
 
 function IconButton({
