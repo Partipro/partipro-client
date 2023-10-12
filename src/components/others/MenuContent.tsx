@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@mui/material/styles";
+import { useLocation, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { MENUS } from "../../constants";
+import { COLORS } from "../../constants";
 import MuiDrawer from "../navigation/Drawer.tsx";
 import AppBar from "../feedback/AppBar.tsx";
 import IconButton from "../inputs/IconButton.tsx";
@@ -13,7 +14,10 @@ import FlexRow from "../layout/FlexRow.tsx";
 import Divider from "../layout/Divider.tsx";
 import { Text } from "../data-display/Typography.tsx";
 import List from "../data-display/List.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 
 function MenuContent() {
   const theme = useTheme();
@@ -22,11 +26,36 @@ function MenuContent() {
   const location = useLocation();
 
   const [currentTab, setCurrentTab] = useState(
-    location.pathname.split("/")[1] || "contract"
+    location.pathname.split("/")[1] || "contract",
   );
   const [open, setOpen] = useState(true);
 
   const currentRoute = location.pathname.split("/")[1];
+
+  const menus = useMemo(() => {
+    return [
+      {
+        label: "Contratos",
+        value: "contracts",
+        Icon: <DescriptionOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+      },
+      {
+        label: "Imóveis",
+        value: "properties",
+        Icon: <HomeWorkOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+      },
+      {
+        label: "Financeiro",
+        value: "finances",
+        Icon: <AttachMoneyOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+      },
+      {
+        label: "Simuladores",
+        value: "simulators",
+        Icon: <CalculateOutlinedIcon sx={{ color: COLORS.SECONDARY }} />,
+      },
+    ];
+  }, []);
 
   useEffect(() => {
     navigate(`/${currentRoute}`);
@@ -52,7 +81,6 @@ function MenuContent() {
           !open && (
             <Block sx={{ marginRight: "5px" }}>
               <IconButton
-                type="inherit"
                 onClick={handleToggleDrawer}
                 edge="start"
                 icon={<MenuIcon />}
@@ -62,6 +90,7 @@ function MenuContent() {
         }
       />
       <MuiDrawer
+        background={COLORS.PRIMARY}
         variant="permanent"
         open={open}
         header={
@@ -69,9 +98,9 @@ function MenuContent() {
             onClick={handleToggleDrawer}
             icon={
               theme.direction === "rtl" ? (
-                <ChevronRightIcon />
+                <ChevronRightIcon sx={{ color: COLORS.SECONDARY }} />
               ) : (
-                <ChevronLeftIcon />
+                <ChevronLeftIcon sx={{ color: COLORS.SECONDARY }} />
               )
             }
           />
@@ -79,7 +108,7 @@ function MenuContent() {
       >
         <Divider />
         <List
-          datasource={MENUS}
+          datasource={menus}
           renderItems={({ label, Icon, value }) => (
             <List.ItemButton
               selected={currentTab === value}
@@ -87,8 +116,8 @@ function MenuContent() {
               onClick={() => handleTabChange(value)}
               key={value}
             >
-              <List.ItemIcon icon={<Icon />} open={open} />
-              {open && <Text label={label} />}
+              <List.ItemIcon icon={Icon} open={open} />
+              {open && <Text weight="medium" type="light" label={label} />}
             </List.ItemButton>
           )}
         />

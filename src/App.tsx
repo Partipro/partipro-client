@@ -13,7 +13,7 @@ const theme = createTheme({
       main: COLORS.PRIMARY,
     },
     secondary: {
-      main: "#E33E7F",
+      main: COLORS.SECONDARY,
     },
   },
 });

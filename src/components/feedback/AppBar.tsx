@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/material/styles";
 
 import { Title } from "../data-display/Typography.tsx";
+import { COLORS } from "../../constants";
 
 const drawerWidth = 180;
 
@@ -21,6 +22,7 @@ interface AppBarProps extends MuiAppBarProps {
 const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<Omit<AppBarProps, "label" | "action" | "extra">>(({ theme, open }) => ({
+  background: COLORS.SECONDARY,
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
@@ -41,7 +43,7 @@ function AppBar({ action, position, label, extra, open = false }: AppBarProps) {
     <StyledAppBar open={open} position={position}>
       <Toolbar>
         {action}
-        <Title type="light" level={4} weight="medium" label={label} />
+        <Title type="primary" level={4} weight="medium" label={label} />
         {extra}
       </Toolbar>
     </StyledAppBar>

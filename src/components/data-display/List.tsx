@@ -3,6 +3,45 @@ import MuiList from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { createTheme, ThemeProvider } from "@mui/material";
+import { COLORS } from "../../constants";
+
+const muiTheme = createTheme({
+  components: {
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          width: "90% !important",
+          margin: "auto",
+
+          ".MuiButtonBase-root": {
+            minHeight: "30px !important",
+            borderRadius: "10px",
+            margin: "9px 0",
+            padding: "7px 22px !important",
+          },
+
+          ".Mui-selected": {
+            backgroundColor: `${COLORS.SECONDARY} !important`,
+          },
+
+          ".Mui-selected .MuiTypography-root, .Mui-selected .MuiListItemIcon-root .MuiSvgIcon-root":
+            {
+              color: `${COLORS.PRIMARY} !important`,
+            },
+
+          ".MuiListItemIcon-root": {
+            marginRight: "0 !important",
+          },
+
+          ".MuiTypography-root": {
+            marginLeft: "17px",
+          },
+        },
+      },
+    },
+  },
+});
 
 type Props<D> = {
   datasource: D[];
@@ -18,7 +57,7 @@ type ItemButtonProps = {
   selected?: boolean;
   onClick?: (
     event?: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    index?: number
+    index?: number,
   ) => void;
 };
 
@@ -38,18 +77,20 @@ const List: IList = function List<D>({
   renderAction,
 }: Props<D>) {
   return (
-    <MuiList>
-      {datasource.map((data, i) => (
-        <ListItem
-          secondaryAction={renderAction?.(data)}
-          key={i}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          {renderItems(data)}
-        </ListItem>
-      ))}
-    </MuiList>
+    <ThemeProvider theme={muiTheme}>
+      <MuiList>
+        {datasource.map((data, i) => (
+          <ListItem
+            secondaryAction={renderAction?.(data)}
+            key={i}
+            disablePadding
+            sx={{ display: "block" }}
+          >
+            {renderItems(data)}
+          </ListItem>
+        ))}
+      </MuiList>
+    </ThemeProvider>
   );
 };
 

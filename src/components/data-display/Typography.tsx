@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { COLORS } from "../../constants";
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
@@ -65,15 +66,27 @@ type Props = {
   size?: "extraSmall" | "small" | "large" | "medium";
   weight?: "normal" | "strong" | "medium";
   label: string;
-  secondary?: boolean;
+  type?: "dark" | "secondary" | "light" | "primary";
 };
 
-function Text({ size = "medium", secondary, weight = "normal", label }: Props) {
+function Text({
+  size = "medium",
+  type = "dark",
+  weight = "normal",
+  label,
+}: Props) {
   return (
     <ThemeProvider theme={theme}>
       <Typography
         variant={size}
-        color={secondary ? "#A5A5A5" : "#000000"}
+        color={
+          {
+            secondary: "#A5A5A5",
+            dark: "#000000",
+            light: "#ffffff",
+            primary: COLORS.PRIMARY,
+          }[type]
+        }
         fontWeight={{ medium: 500, strong: 700, normal: 400 }[weight]}
       >
         {label}
@@ -85,7 +98,7 @@ function Text({ size = "medium", secondary, weight = "normal", label }: Props) {
 type TitleProps = {
   level?: 1 | 2 | 3 | 4;
   label: string;
-  type?: "dark" | "secondary" | "light";
+  type?: "dark" | "secondary" | "light" | "primary";
   weight?: "normal" | "strong" | "medium";
 };
 
@@ -99,7 +112,12 @@ function Title({
     <ThemeProvider theme={theme}>
       <Typography
         color={
-          { secondary: "#A5A5A5", dark: "#000000", light: "#ffffff" }[type]
+          {
+            secondary: "#A5A5A5",
+            dark: "#000000",
+            light: "#ffffff",
+            primary: COLORS.PRIMARY,
+          }[type]
         }
         fontWeight={{ medium: 500, strong: 700, normal: 400 }[weight]}
         variant={

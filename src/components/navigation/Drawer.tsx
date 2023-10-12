@@ -2,9 +2,8 @@ import MuiDrawer from "@mui/material/Drawer";
 import React from "react";
 import { CSSObject, styled, Theme } from "@mui/material/styles";
 
-type Props = {
+type MuiDrawerProps = {
   anchor?: "left" | "right";
-  open: boolean;
   onClose?: () => void;
   onOpen?: () => void;
   variant?: "permanent" | "temporary";
@@ -14,21 +13,23 @@ type Props = {
 
 const drawerWidth = 180;
 
-const openedMixin = (theme: Theme): CSSObject => ({
+const openedMixin = (theme: Theme, background?: string): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
+  background,
   overflowX: "hidden",
 });
 
-const closedMixin = (theme: Theme): CSSObject => ({
+const closedMixin = (theme: Theme, background?: string): CSSObject => ({
   transition: theme.transitions.create("width", {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
+  background,
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
@@ -43,26 +44,31 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
+interface DrawerProps extends MuiDrawerProps {
+  open: boolean;
+  background?: string;
+}
+
 const StyledDrawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+})<DrawerProps>(({ theme, open, background = "#ffffff" }) => ({
   width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
+    ...openedMixin(theme, background),
+    "& .MuiDrawer-paper": openedMixin(theme, background),
   }),
   ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
+    ...closedMixin(theme, background),
+    "& .MuiDrawer-paper": closedMixin(theme, background),
   }),
 }));
 
-function Drawer({ children, header, ...props }: Props) {
+function Drawer({ children, header, background, ...props }: DrawerProps) {
   return (
-    <StyledDrawer {...props}>
+    <StyledDrawer background={background} {...props}>
       {header && <DrawerHeader>{header}</DrawerHeader>}
       {children}
     </StyledDrawer>
