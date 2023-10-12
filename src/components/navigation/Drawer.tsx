@@ -49,22 +49,22 @@ interface DrawerProps extends MuiDrawerProps {
   background?: string;
 }
 
-const StyledDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<DrawerProps>(({ theme, open, background = "#ffffff" }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme, background),
-    "& .MuiDrawer-paper": openedMixin(theme, background),
+const StyledDrawer = styled(MuiDrawer)<DrawerProps>(
+  ({ theme, open, background = "#ffffff" }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    boxSizing: "border-box",
+    ...(open && {
+      ...openedMixin(theme, background),
+      "& .MuiDrawer-paper": openedMixin(theme, background),
+    }),
+    ...(!open && {
+      ...closedMixin(theme, background),
+      "& .MuiDrawer-paper": closedMixin(theme, background),
+    }),
   }),
-  ...(!open && {
-    ...closedMixin(theme, background),
-    "& .MuiDrawer-paper": closedMixin(theme, background),
-  }),
-}));
+);
 
 function Drawer({ children, header, background, ...props }: DrawerProps) {
   return (
