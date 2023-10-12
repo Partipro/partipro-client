@@ -5,12 +5,14 @@ import { styled } from "@mui/material/styles";
 
 import { Title } from "../data-display/Typography.tsx";
 import { COLORS } from "../../constants";
+import FlexRow from "../layout/FlexRow.tsx";
 
 const drawerWidth = 180;
 
 type MuiAppBarProps = {
   action?: React.ReactNode;
   label: string;
+  titleIcon?: React.ReactNode;
   extra?: React.ReactNode;
   position?: "fixed" | "absolute" | "static";
 };
@@ -38,12 +40,22 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }));
 
-function AppBar({ action, position, label, extra, open = false }: AppBarProps) {
+function AppBar({
+  action,
+  position,
+  label,
+  extra,
+  open = false,
+  titleIcon,
+}: AppBarProps) {
   return (
     <StyledAppBar open={open} position={position}>
       <Toolbar>
         {action}
-        <Title type="primary" level={4} weight="medium" label={label} />
+        <FlexRow sx={{ gap: "15px" }}>
+          {titleIcon}
+          <Title type="primary" level={4} weight="medium" label={label} />
+        </FlexRow>
         {extra}
       </Toolbar>
     </StyledAppBar>
