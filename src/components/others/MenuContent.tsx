@@ -5,6 +5,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
+import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import { COLORS } from "../../constants";
 import MuiDrawer from "../navigation/Drawer.tsx";
 import AppBar from "../feedback/AppBar.tsx";
@@ -14,13 +19,10 @@ import FlexRow from "../layout/FlexRow.tsx";
 import Divider from "../layout/Divider.tsx";
 import { Text } from "../data-display/Typography.tsx";
 import List from "../data-display/List.tsx";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
-import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
-import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
 import useMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
 } from "../../hooks/useMediaQuery.tsx";
+import Button from "../inputs/Button.tsx";
 
 function MenuContent() {
   const theme = useTheme();
@@ -51,6 +53,7 @@ function MenuContent() {
         icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
           <HomeWorkOutlinedIcon sx={{ color }} />
         ),
+        action: "Novo imóvel",
       },
       {
         label: "Financeiro",
@@ -101,6 +104,15 @@ function MenuContent() {
                 icon={<MenuIcon />}
               />
             </Block>
+          )
+        }
+        extra={
+          menus.find((menu) => menu.value === currentRoute)?.action && (
+            <Button
+              label={menus.find((menu) => menu.value === currentRoute)?.action}
+              size="small"
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+            />
           )
         }
       />

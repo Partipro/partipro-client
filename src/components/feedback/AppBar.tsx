@@ -51,12 +51,24 @@ function AppBar({
   return (
     <StyledAppBar open={open} position={position}>
       <Toolbar>
-        {action}
-        <FlexRow sx={{ gap: "15px" }}>
-          {titleIcon}
-          <Title type="primary" level={4} weight="medium" label={label} />
+        <FlexRow
+          sx={{
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "10px",
+          }}
+        >
+          <FlexRow sx={{ width: "fit-content", alignItems: "center" }}>
+            {action}
+            <FlexRow sx={{ gap: "15px" }}>
+              {titleIcon}
+              <Title type="primary" level={4} weight="medium" label={label} />
+            </FlexRow>
+          </FlexRow>
+          {extra}
         </FlexRow>
-        {extra}
       </Toolbar>
     </StyledAppBar>
   );
