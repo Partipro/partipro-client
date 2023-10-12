@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -18,9 +18,13 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
+import useMediaQuery, {
+  MEDIA_QUERY_BREAKPOINTS,
+} from "../../hooks/useMediaQuery.tsx";
 
 function MenuContent() {
   const theme = useTheme();
+  const [isDesktop] = useMediaQuery(MEDIA_QUERY_BREAKPOINTS.MD);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -76,7 +80,7 @@ function MenuContent() {
       <AppBar
         position="fixed"
         open={open}
-        label="Mini variant drawer"
+        label={menus.find((menu) => menu.value === currentRoute)?.label || ""}
         action={
           !open && (
             <Block sx={{ marginRight: "5px" }}>
@@ -91,7 +95,7 @@ function MenuContent() {
       />
       <MuiDrawer
         background={COLORS.PRIMARY}
-        variant="permanent"
+        variant={isDesktop ? "permanent" : "temporary"}
         open={open}
         header={
           <IconButton
@@ -122,6 +126,9 @@ function MenuContent() {
           )}
         />
       </MuiDrawer>
+      <FlexRow sx={{ margin: "90px 24px" }}>
+        <Outlet />
+      </FlexRow>
     </FlexRow>
   );
 }
