@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import MenuContent from "./components/others/MenuContent.tsx";
+import PropertiesForm from "./screens/Properties/screens/PropertiesForm.tsx";
 
 const Contracts = lazy(
   () => import("./screens/Contracts/screens/Contracts.tsx"),
@@ -39,6 +40,16 @@ const protectedRoutes = createBrowserRouter([
       {
         path: "/properties",
         element: <Properties />,
+        children: [
+          {
+            path: "new",
+            element: <PropertiesForm />,
+          },
+          {
+            path: ":id",
+            element: <PropertiesForm />,
+          },
+        ],
       },
     ],
   },
