@@ -19,6 +19,7 @@ function TextField({ type = "text", icon, ...props }: Props) {
   return (
     <MuiTextField
       type={type}
+      fullWidth
       InputProps={
         icon
           ? {
