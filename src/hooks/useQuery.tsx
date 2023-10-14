@@ -5,7 +5,7 @@ function useQuery<R, F>({
   service,
   autoStart = true,
 }: {
-  queryKey?: [keyof F, F[keyof F]];
+  queryKey?: [keyof F, F[keyof F] | undefined];
   service: (filters?: F[keyof F]) => Promise<R>;
   autoStart?: boolean;
 }): {
