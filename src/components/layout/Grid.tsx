@@ -20,8 +20,8 @@ function Grid({ spacing = 2, items }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <MuiGrid container spacing={spacing}>
-        {items.map(({ item, ...span }) => (
-          <MuiGrid item {...span}>
+        {items.map(({ item, ...span }, i) => (
+          <MuiGrid key={i} item {...span}>
             {item}
           </MuiGrid>
         ))}
