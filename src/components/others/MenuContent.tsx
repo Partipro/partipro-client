@@ -129,6 +129,7 @@ function MenuContent() {
             <Button
               label={menus.find((menu) => menu.value === currentRoute)?.action}
               size="small"
+              onClick={() => navigate(`/${currentRoute}/new`)}
               startIcon={<AddCircleOutlineOutlinedIcon />}
             />
           )
