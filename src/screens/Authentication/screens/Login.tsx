@@ -31,9 +31,7 @@ function Login() {
 
   const [doLogin] = useMutation({
     service: login,
-    onSuccess: () => {
-      handleFetchUser();
-    },
+    onSuccess: handleFetchUser,
     onError: (error) => {
       setSnackbar({
         type: "error",

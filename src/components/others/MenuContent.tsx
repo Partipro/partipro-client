@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import LogoutIcon from "@mui/icons-material/Logout";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
@@ -23,9 +24,14 @@ import useMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
 } from "../../hooks/useMediaQuery.tsx";
 import Button from "../inputs/Button.tsx";
+import FlexColumn from "../layout/FlexColumn.tsx";
+import Avatar from "../data-display/Avatar.tsx";
+import { useAuth } from "../../context/AuthContext.tsx";
+import Menu from "../navigation/Menu.tsx";
 
 function MenuContent() {
   const theme = useTheme();
+  const { user, handleLogout } = useAuth();
   const [isDesktop] = useMediaQuery(MEDIA_QUERY_BREAKPOINTS.MD);
 
   const navigate = useNavigate();
@@ -35,6 +41,9 @@ function MenuContent() {
     location.pathname.split("/")[1] || "contract",
   );
   const [open, setOpen] = useState(isDesktop);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const menuOpen = Boolean(anchorEl);
 
   const currentRoute = location.pathname.split("/")[1];
 
@@ -83,6 +92,15 @@ function MenuContent() {
 
   const handleToggleDrawer = () => {
     setOpen(!open);
+  };
+
+  const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleLogoutClick = () => {
+    setAnchorEl(null);
+    handleLogout();
   };
 
   return (
@@ -148,7 +166,46 @@ function MenuContent() {
             </List.ItemButton>
           )}
         />
+        <FlexColumn
+          sx={{
+            position: "fixed",
+            bottom: "10px",
+            width: "inherit",
+            textAlign: "center",
+            gap: "10px",
+          }}
+        >
+          <Divider />
+          <FlexRow
+            sx={{
+              gap: "10px",
+              overflow: "hidden",
+              maxWidth: "160px",
+            }}
+            aligned
+          >
+            <IconButton
+              onClick={handleMenuOpen}
+              icon={<Avatar clickable src="" alt="profile" />}
+            />
+            {open && (
+              <Text label={user?.name || ""} weight="medium" type="secondary" />
+            )}
+          </FlexRow>
+        </FlexColumn>
       </MuiDrawer>
+      <Menu
+        anchorEl={anchorEl}
+        open={menuOpen}
+        onClose={() => setAnchorEl(null)}
+        menus={[
+          {
+            label: "Sair",
+            onClick: handleLogoutClick,
+            icon: <LogoutIcon />,
+          },
+        ]}
+      />
       <FlexRow sx={{ margin: "90px 24px" }}>
         <Outlet />
       </FlexRow>

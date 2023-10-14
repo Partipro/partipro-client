@@ -2,18 +2,19 @@ import React, { useEffect, useMemo, useState } from "react";
 import User from "../models/User.ts";
 import useQuery from "../hooks/useQuery.tsx";
 import getUser from "../services/user/getUser.ts";
+import logout from "../services/auth/logout.ts";
 
 type AuthContextProps = {
   isAuthenticated: boolean;
   user?: User;
   handleFetchUser: () => void;
-  // logout: () => void;
+  handleLogout: () => void;
 };
 
 const AuthContext = React.createContext<AuthContextProps>({
   isAuthenticated: false,
   handleFetchUser: () => false,
-  // logout: () => false,
+  handleLogout: () => false,
 });
 
 type AuthContextProviderProps = { children: React.ReactNode };
@@ -25,31 +26,34 @@ function AuthContextProvider({ children }: AuthContextProviderProps) {
     isLoading: isFetchingUser,
     refetch: fetchUser,
     data: user,
-    isSuccess: isUserSuccess,
-    isError: isUserError,
   } = useQuery({
     autoStart: false,
-    service: getUser,
+    service: async () => {
+      const user = await getUser();
+
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+
+      return user;
+    },
   });
 
-  // const [, fetchLogout] = useService(logoutUser, {
-  //   autoStart: false,
-  //   onData: () => {
-  //     setIsLoading(false);
-  //     setIsAuthenticated(false);
-  //     localStorage.clear();
-  //     navigate("/auth/login", { replace: true });
-  //   },
-  // });
+  const { refetch: logoutUser } = useQuery({
+    autoStart: false,
+    queryKey: ["logout", undefined],
+    service: async () => {
+      const loggedOut = await logout();
 
-  useEffect(() => {
-    if (isUserSuccess) {
-      setIsAuthenticated(true);
-    }
-    if (isUserError) {
-      setIsAuthenticated(false);
-    }
-  }, [isUserSuccess, isUserError]);
+      if (loggedOut) {
+        setIsAuthenticated(false);
+      }
+
+      return loggedOut;
+    },
+  });
 
   useEffect(() => {
     fetchUser();
@@ -60,6 +64,7 @@ function AuthContextProvider({ children }: AuthContextProviderProps) {
       isAuthenticated,
       user,
       handleFetchUser: fetchUser,
+      handleLogout: logoutUser,
     }),
     [isAuthenticated, isFetchingUser, user],
   );
