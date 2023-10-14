@@ -1,8 +1,8 @@
 import React from "react";
-import MuiIconButton from "@mui/material/IconButton";
+import MuiIconButton, { IconButtonProps } from "@mui/material/IconButton";
 
 type Props = {
-  onClick?: () => void;
+  onClick?: IconButtonProps["onClick"];
   icon: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
