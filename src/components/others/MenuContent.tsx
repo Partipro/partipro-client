@@ -8,6 +8,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
@@ -200,6 +201,11 @@ function MenuContent() {
         open={menuOpen}
         onClose={() => setAnchorEl(null)}
         menus={[
+          {
+            label: "Planos",
+            onClick: () => navigate("/plans"),
+            icon: <CurrencyExchangeIcon />,
+          },
           {
             label: "Sair",
             onClick: handleLogoutClick,
