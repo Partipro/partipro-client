@@ -12,7 +12,7 @@ type Props = {
   error?: boolean;
   id?: string;
   helperText?: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode | string;
 };
 
 function TextField({ type = "text", icon, ...props }: Props) {

@@ -13,7 +13,8 @@ type Props = {
   children?: React.ReactNode;
   saveButton?:
     | {
-        label: string;
+        label?: string;
+        onClick?: () => void;
       }
     | boolean;
   cancelButton?:
@@ -48,13 +49,14 @@ function Dialog({
           <Button
             variant="text"
             onClick={onClose}
-            label={(cancelButton as { label: string }).label}
+            label={(cancelButton as { label: string }).label || "Cancel"}
           />
         )}
         {saveButton && (
           <Button
+            onClick={(saveButton as { onClick?: () => void })?.onClick}
             htmlType="submit"
-            label={(saveButton as { label: string }).label}
+            label={(saveButton as { label: string }).label || "Save"}
           />
         )}
       </DialogActions>
