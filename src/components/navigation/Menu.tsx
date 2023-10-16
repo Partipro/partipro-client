@@ -8,7 +8,7 @@ type Props = {
   anchorEl?: MenuProps["anchorEl"];
   open: boolean;
   onClose?: () => void;
-  menus: [{ onClick: () => void; label: string; icon?: React.ReactNode }];
+  menus: { onClick: () => void; label: string; icon?: React.ReactNode }[];
   position?: MenuProps["anchorOrigin"];
 };
 
