@@ -1,4 +1,4 @@
 export default interface BaseModel {
-  id: string;
+  _id: string;
   createdAt: string;
 }
