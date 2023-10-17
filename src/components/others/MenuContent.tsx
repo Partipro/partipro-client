@@ -213,8 +213,20 @@ function MenuContent() {
           },
         ]}
       />
-      <FlexRow sx={{ margin: "90px 24px" }}>
-        <Outlet />
+      <FlexRow
+        sx={{
+          width: isDesktop ? "calc(100vw - 180px)" : "100vw",
+        }}
+      >
+        <FlexRow
+          sx={{
+            margin: "90px 24px",
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          <Outlet />
+        </FlexRow>
       </FlexRow>
     </FlexRow>
   );
