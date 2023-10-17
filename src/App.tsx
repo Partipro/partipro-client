@@ -15,6 +15,9 @@ const theme = createTheme({
     secondary: {
       main: COLORS.SECONDARY,
     },
+    warning: {
+      main: COLORS.WARNING,
+    },
   },
 });
 
