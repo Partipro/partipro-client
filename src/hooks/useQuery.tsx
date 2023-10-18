@@ -1,4 +1,8 @@
-import { useQuery as reactUseQuery } from "@tanstack/react-query";
+import {
+  RefetchOptions,
+  RefetchQueryFilters,
+  useQuery as reactUseQuery,
+} from "@tanstack/react-query";
 
 function useQuery<R, F>({
   queryKey,
@@ -14,7 +18,7 @@ function useQuery<R, F>({
   isSuccess: boolean;
   isError: boolean;
   error: any;
-  refetch: () => void;
+  refetch: (data?: RefetchOptions & RefetchQueryFilters<F>) => void;
 } {
   const { isLoading, data, refetch, isSuccess, isError, error } = reactUseQuery(
     {
