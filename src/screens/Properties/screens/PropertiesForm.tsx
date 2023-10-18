@@ -9,20 +9,30 @@ import { required } from "../../../helpers/validations.ts";
 import { compact } from "lodash";
 import Select from "../../../components/inputs/Select.tsx";
 import { PropertyType } from "../../../models/Property.ts";
+import { showDialog } from "../../../components/feedback/Snackbar.tsx";
+import useQuery from "../../../hooks/useQuery.tsx";
+import getPropertyById from "../services/getPropertyById.ts";
 
 function PropertiesForm() {
   const params = useParams();
   const navigate = useNavigate();
 
+  const { data: property } = useQuery({
+    autoStart: true,
+    queryKey: ["id", params.id],
+    service: getPropertyById,
+  });
+
   const [doCreate] = useMutation({
     service: postProperty,
     onSuccess: () => {
+      showDialog("Propriedade registrada com sucesso", "success");
       navigate(-1);
     },
   });
 
   const [formik] = useForm({
-    initialValues: {
+    initialValues: property || {
       name: "",
       type: "",
       address: "",
@@ -30,6 +40,7 @@ function PropertiesForm() {
       monthRent: 0,
       squareMeters: 0,
     },
+    enableReinitialize: true,
     validate: (values) => {
       let errors: { type?: string; name?: string } = {};
       errors.name = required(values.name);
