@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "../../../components/feedback/Dialog.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
@@ -17,8 +18,8 @@ function PropertiesForm() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data: property } = useQuery({
-    autoStart: true,
+  const { data: property, refetch: fetchById } = useQuery({
+    autoStart: false,
     queryKey: ["id", params.id],
     service: getPropertyById,
   });
@@ -53,6 +54,12 @@ function PropertiesForm() {
     },
     onSubmit: doCreate.mutate,
   });
+
+  useEffect(() => {
+    if (params.id) {
+      fetchById({ queryKey: ["id", params.id] });
+    }
+  }, [params.id]);
 
   return (
     <Dialog
