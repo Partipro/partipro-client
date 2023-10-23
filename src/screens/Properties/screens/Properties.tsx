@@ -21,9 +21,13 @@ function Properties() {
       {properties?.length ? (
         <Grid
           spacing={4}
+          containerStyles={{
+            height: "inherit",
+          }}
           items={properties.map((property) => ({
             item: (
               <Card
+                fullHeight
                 info={
                   <Chip
                     label={

@@ -1,6 +1,8 @@
 import MuiGrid from "@mui/material/Grid";
 import React from "react";
 import Box from "@mui/material/Box";
+import { SxProps } from "@mui/system";
+import { Theme } from "@mui/material/styles";
 
 type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
@@ -14,12 +16,13 @@ type Props = {
     lg?: GridSpan;
     xl?: GridSpan;
   }[];
+  containerStyles?: SxProps<Theme>;
 };
 
-function Grid({ spacing = 2, items }: Props) {
+function Grid({ spacing = 2, items, containerStyles }: Props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <MuiGrid container spacing={spacing}>
+      <MuiGrid container sx={containerStyles} spacing={spacing}>
         {items.map(({ item, ...span }, i) => (
           <MuiGrid key={i} item {...span}>
             {item}
