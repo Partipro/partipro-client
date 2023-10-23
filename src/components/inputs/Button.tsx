@@ -1,7 +1,7 @@
 import React from "react";
 import MuiButton from "@mui/material/Button";
 
-type Props = {
+export type ButtonProps = {
   variant?: "text" | "contained" | "outlined";
   onClick?: () => void;
   label?: string | number;
@@ -21,7 +21,7 @@ function Button({
   htmlType = "button",
   type = "primary",
   ...props
-}: Props): React.ReactNode {
+}: ButtonProps): React.ReactNode {
   return (
     <MuiButton
       {...props}
