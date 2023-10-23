@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { compact } from "lodash";
+import { connect } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "../../../components/feedback/Dialog.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
@@ -7,12 +9,12 @@ import useMutation from "../../../hooks/useMutation.tsx";
 import postProperty from "../services/postProperty.ts";
 import useForm from "../../../hooks/useForm.tsx";
 import { required } from "../../../helpers/validations.ts";
-import { compact } from "lodash";
 import Select from "../../../components/inputs/Select.tsx";
 import { PropertyType } from "../../../models/Property.ts";
 import { showDialog } from "../../../components/feedback/Snackbar.tsx";
 import useQuery from "../../../hooks/useQuery.tsx";
 import getPropertyById from "../services/getPropertyById.ts";
+import FileUpload from "../../../components/inputs/FileUpload.tsx";
 
 function PropertiesForm() {
   const params = useParams();
@@ -40,6 +42,7 @@ function PropertiesForm() {
       city: "",
       monthRent: 0,
       squareMeters: 0,
+      image: "",
     },
     enableReinitialize: true,
     validate: (values) => {
@@ -153,6 +156,15 @@ function PropertiesForm() {
               ),
               xs: 6,
             },
+            {
+              item: (
+                <FileUpload
+                  onChange={(file) => formik.setFieldValue("image", file)}
+                  name="image"
+                />
+              ),
+              xs: 12,
+            },
           ]}
         />
       </form>
@@ -160,4 +172,4 @@ function PropertiesForm() {
   );
 }
 
-export default PropertiesForm;
+export default connect(PropertiesForm);
