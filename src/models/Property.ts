@@ -13,5 +13,5 @@ export default interface Property extends BaseModel {
   type: PropertyType;
   address: string;
   contract: string;
-  photo: string;
+  image: string;
 }
