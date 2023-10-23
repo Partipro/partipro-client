@@ -22,12 +22,14 @@ type Props = {
         label: string;
       }
     | boolean;
+  width?: "xs" | "sm" | "md" | "lg";
 };
 
 function Dialog({
   title,
   children,
   onClose,
+  width = "md",
   saveButton = { label: "Save" },
   cancelButton = { label: "Cancel" },
   ...props
@@ -36,7 +38,7 @@ function Dialog({
 
   return (
     <MuiDialog
-      maxWidth="md"
+      maxWidth={width}
       onClose={onClose}
       fullWidth
       fullScreen={!isDesktop}
@@ -44,22 +46,24 @@ function Dialog({
     >
       {title && <DialogTitle>{title}</DialogTitle>}
       <DialogContent>{children}</DialogContent>
-      <DialogActions>
-        {cancelButton && (
-          <Button
-            variant="text"
-            onClick={onClose}
-            label={(cancelButton as { label: string }).label || "Cancel"}
-          />
-        )}
-        {saveButton && (
-          <Button
-            onClick={(saveButton as { onClick?: () => void })?.onClick}
-            htmlType="submit"
-            label={(saveButton as { label: string }).label || "Save"}
-          />
-        )}
-      </DialogActions>
+      {(cancelButton || saveButton) && (
+        <DialogActions>
+          {cancelButton && (
+            <Button
+              variant="text"
+              onClick={onClose}
+              label={(cancelButton as { label: string }).label || "Cancel"}
+            />
+          )}
+          {saveButton && (
+            <Button
+              onClick={(saveButton as { onClick?: () => void })?.onClick}
+              htmlType="submit"
+              label={(saveButton as { label: string }).label || "Save"}
+            />
+          )}
+        </DialogActions>
+      )}
     </MuiDialog>
   );
 }
