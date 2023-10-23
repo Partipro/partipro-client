@@ -21,7 +21,7 @@ export default async function request<T>({
 }: AxiosRequestConfig): Promise<T> {
   try {
     const response = await axios.request<T>({
-      url: `http://localhost:8000/api/v1/${url}`,
+      url: `${import.meta.env.VITE_API_URL}/${url}`,
       withCredentials: true,
       ...rest,
     });
