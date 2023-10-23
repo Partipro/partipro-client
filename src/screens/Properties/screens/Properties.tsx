@@ -39,8 +39,9 @@ function Properties() {
                   />
                 }
                 src={
-                  property.photo ||
-                  "https://media.istockphoto.com/id/1128826884/pt/vetorial/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=170667a&w=0&k=20&c=W1UzMnnyqtdNBowZVk_JtR_dP0xFajvJvYCG5zL4NWU="
+                  property.image
+                    ? `${import.meta.env.VITE_ASSETS_URL}/${property.image}`
+                    : "https://media.istockphoto.com/id/1128826884/pt/vetorial/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=170667a&w=0&k=20&c=W1UzMnnyqtdNBowZVk_JtR_dP0xFajvJvYCG5zL4NWU="
                 }
                 title={property.name}
                 actions={
