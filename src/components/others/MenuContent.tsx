@@ -9,6 +9,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
+import PersonIcon from "@mui/icons-material/Person";
 import AttachMoneyOutlinedIcon from "@mui/icons-material/AttachMoneyOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import CalculateOutlinedIcon from "@mui/icons-material/CalculateOutlined";
@@ -64,6 +65,13 @@ function MenuContent() {
           <HomeWorkOutlinedIcon sx={{ color }} />
         ),
         action: "Novo imóvel",
+      },
+      {
+        label: "Locatários",
+        value: "renters",
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <PersonIcon sx={{ color }} />
+        ),
       },
       {
         label: "Financeiro",
