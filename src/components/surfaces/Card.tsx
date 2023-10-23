@@ -10,22 +10,36 @@ type Props = {
   children?: React.ReactNode;
   actions?: React.ReactNode;
   info?: React.ReactNode;
+  fullHeight?: boolean;
 };
 
-function Card({ src, title, children, actions, info }: Props) {
+function Card({ src, title, children, actions, info, fullHeight }: Props) {
   return (
-    <MuiCard sx={{ position: "relative", overflow: "visible !important" }}>
-      {info && (
-        <Block sx={{ position: "absolute", top: "-10px", right: "-20px" }}>
-          {info}
-        </Block>
+    <MuiCard
+      sx={{
+        position: "relative",
+        overflow: "visible !important",
+        ...(fullHeight ? { height: "100%" } : {}),
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <div>
+        {info && (
+          <Block sx={{ position: "absolute", top: "-10px", right: "-20px" }}>
+            {info}
+          </Block>
+        )}
+        {src && <CardMedia height={150} component="img" image={src} />}
+        <CardContent>
+          {title && <Title label={title} weight="strong" level={4} />}
+          {children}
+        </CardContent>
+      </div>
+      {actions && (
+        <CardActions sx={{ justifyContent: "end" }}>{actions}</CardActions>
       )}
-      {src && <CardMedia component="img" image={src} />}
-      <CardContent>
-        {title && <Title label={title} weight="strong" level={4} />}
-        {children}
-      </CardContent>
-      {actions && <CardActions>{actions}</CardActions>}
     </MuiCard>
   );
 }
