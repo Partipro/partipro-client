@@ -6,7 +6,7 @@ type Props = {
   icon: React.ReactNode;
   loading?: boolean;
   disabled?: boolean;
-  type?: "primary" | "secondary" | "success" | "info" | "inherit";
+  type?: "primary" | "secondary" | "success" | "info" | "inherit" | "error";
   size?: "small" | "medium" | "large";
   edge?: false | "start" | "end" | undefined;
 };
