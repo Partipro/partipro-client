@@ -1,8 +1,8 @@
 import React from "react";
 import MuiCard from "@mui/material/Card";
 import { CardActions, CardContent, CardMedia } from "@mui/material";
-import { Title } from "../data-display/Typography.tsx";
 import Block from "../layout/Block.tsx";
+import { Text } from "../data-display/Typography.tsx";
 
 type Props = {
   src?: string;
@@ -33,7 +33,7 @@ function Card({ src, title, children, actions, info, fullHeight }: Props) {
         )}
         {src && <CardMedia height={150} component="img" image={src} />}
         <CardContent>
-          {title && <Title label={title} weight="strong" level={4} />}
+          {title && <Text label={title} weight="strong" size="large" />}
           {children}
         </CardContent>
       </div>
