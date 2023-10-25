@@ -7,6 +7,7 @@ import Card from "../../../components/surfaces/Card.tsx";
 import { Text } from "../../../components/data-display/Typography.tsx";
 import Chip from "../../../components/data-display/Chip.tsx";
 import Button from "../../../components/inputs/Button.tsx";
+import FlexRow from "../../../components/layout/FlexRow.tsx";
 
 function Properties() {
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function Properties() {
                 actions={
                   <>
                     <Button
-                      label="Edit"
+                      label="Editar"
                       variant="text"
                       onClick={() => navigate(property._id)}
                     />
@@ -59,15 +60,29 @@ function Properties() {
                 }
               >
                 <FlexColumn>
-                  {property.monthRent && (
-                    <Text
-                      label={`R$ ${property.monthRent} p/m`}
-                      type="secondary"
-                      weight="medium"
-                    />
-                  )}
+                  <FlexRow sx={{ gap: "4px" }}>
+                    {property.monthRent && (
+                      <Text
+                        label={`R$ ${property.monthRent} p/m`}
+                        type="secondary"
+                        weight="medium"
+                      />
+                    )}
+                    {property.squareMeters && (
+                      <Text
+                        label={` - ${property.squareMeters}m2`}
+                        type="secondary"
+                        weight="medium"
+                      />
+                    )}
+                  </FlexRow>
                   <Text
                     label={property.city}
+                    type="secondary"
+                    weight="medium"
+                  />
+                  <Text
+                    label={property.address}
                     type="secondary"
                     weight="medium"
                   />
