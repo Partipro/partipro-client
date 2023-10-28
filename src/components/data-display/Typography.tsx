@@ -141,11 +141,30 @@ function Title({
 type LinkProps = {
   weight?: "normal" | "strong" | "medium";
   label: string;
-  to: string;
-  type?: "dark" | "secondary" | "light" | "primary";
+  to?: string;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+  type?: "secondary" | "primary" | "dark";
 };
 
-function Link({ weight = "strong", to, label }: LinkProps) {
+function Link({
+  weight = "strong",
+  label,
+}: Omit<LinkProps, "to" | "onClick"> & {
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+}): React.ReactElement;
+function Link({
+  weight = "strong",
+  label,
+}: Omit<LinkProps, "to" | "onClick"> & {
+  to: string;
+}): React.ReactElement;
+function Link({
+  weight = "strong",
+  to,
+  label,
+  onClick,
+  type = "primary",
+}: LinkProps) {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -160,10 +179,15 @@ function Link({ weight = "strong", to, label }: LinkProps) {
         onClick={preventDefault}
       >
         <RouterLink
-          to={to}
+          to={to || "#"}
+          onClick={onClick}
           style={{
             fontWeight: { medium: 500, strong: 700, normal: 400 }[weight],
-            color: "#0a5694",
+            color: {
+              primary: COLORS.PRIMARY,
+              secondary: COLORS.SECONDARY,
+              dark: "#000000",
+            }[type],
             fontSize: "13px",
           }}
         >
