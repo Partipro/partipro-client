@@ -20,7 +20,7 @@ import IconButton from "../inputs/IconButton.tsx";
 import Block from "../layout/Block.tsx";
 import FlexRow from "../layout/FlexRow.tsx";
 import Divider from "../layout/Divider.tsx";
-import { Text } from "../data-display/Typography.tsx";
+import { Link, Text } from "../data-display/Typography.tsx";
 import List from "../data-display/List.tsx";
 import useMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
@@ -192,6 +192,11 @@ function MenuContent() {
               gap: "10px",
               overflow: "hidden",
               maxWidth: "160px",
+              ...(!open
+                ? {
+                    margin: "0 8px",
+                  }
+                : {}),
             }}
             aligned
           >
@@ -200,7 +205,12 @@ function MenuContent() {
               icon={<Avatar clickable src="" alt="profile" />}
             />
             {open && (
-              <Text label={user?.name || ""} weight="medium" type="secondary" />
+              <Link
+                onClick={(e) => handleMenuOpen(e)}
+                label={user?.name || ""}
+                weight="medium"
+                type="secondary"
+              />
             )}
           </FlexRow>
         </FlexColumn>
