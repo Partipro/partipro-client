@@ -92,10 +92,12 @@ function Properties() {
                     <Button
                       label="Editar"
                       variant="text"
+                      size="small"
                       onClick={() => navigate(property._id)}
                     />
                     <IconButton
                       type="error"
+                      size="small"
                       icon={<DeleteIcon />}
                       onClick={() => handleDelete(property)}
                     />
