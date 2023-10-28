@@ -16,6 +16,7 @@ const Properties = lazy(
 const PropertiesForm = lazy(
   () => import("./screens/Properties/screens/PropertiesForm.tsx"),
 );
+const Renters = lazy(() => import("./screens/Renters/screens/Renters.tsx"));
 
 const authRoutes = createBrowserRouter([
   {
@@ -43,6 +44,20 @@ const protectedRoutes = createBrowserRouter([
       {
         path: "/properties",
         element: <Properties />,
+        children: [
+          {
+            path: "new",
+            element: <PropertiesForm />,
+          },
+          {
+            path: ":id",
+            element: <PropertiesForm />,
+          },
+        ],
+      },
+      {
+        path: "/renters",
+        element: <Renters />,
         children: [
           {
             path: "new",
