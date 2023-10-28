@@ -224,7 +224,7 @@ function MenuContent() {
       />
       <FlexRow
         sx={{
-          width: isDesktop ? "calc(100vw - 180px)" : "100vw",
+          width: isDesktop ? `calc(100vw - ${open ? 180 : 64}px)` : "100vw",
         }}
       >
         <FlexRow
