@@ -56,7 +56,7 @@ function useRenters() {
         message: "Locatário registrado com sucesso",
         type: "success",
       });
-      navigate(-1);
+      navigate("/renters");
     },
   });
 
@@ -68,7 +68,7 @@ function useRenters() {
         message: "Locatário atualizada com sucesso",
         type: "success",
       });
-      navigate(-1);
+      navigate("/renters");
     },
   });
 

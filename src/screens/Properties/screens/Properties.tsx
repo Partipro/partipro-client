@@ -1,69 +1,30 @@
+import useProperties from "../hooks/useProperties.tsx";
+
 import("./PropertiesForm.tsx");
 import { Outlet, useNavigate } from "react-router-dom";
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
-import useQuery from "../../../hooks/useQuery.tsx";
-import getProperties from "../services/getProperties.ts";
 import Grid from "../../../components/layout/Grid.tsx";
 import Card from "../../../components/surfaces/Card.tsx";
 import { Text } from "../../../components/data-display/Typography.tsx";
 import Chip from "../../../components/data-display/Chip.tsx";
 import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
-import useMutation from "../../../hooks/useMutation.tsx";
-import deleteProperty from "../services/deleteProperty.ts";
-import { useNotification } from "../../../context/NotificationContext.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "../../../components/inputs/IconButton.tsx";
-import Property from "../../../models/Property.ts";
 
 function Properties() {
-  const { notification, dialog } = useNotification();
+  const [values] = useProperties();
   const navigate = useNavigate();
-
-  const { data: properties } = useQuery({
-    autoStart: true,
-    queryKey: ["name", ""],
-    service: getProperties,
-  });
-
-  const [doDelete] = useMutation({
-    service: deleteProperty,
-    onSuccess: () => {
-      notification({
-        message: "Propriedade deletada com sucesso",
-        type: "success",
-      });
-    },
-  });
-
-  const handleDelete = (property: Property) => {
-    dialog({
-      saveButton: {
-        onClick: () => {
-          doDelete.mutate(property._id);
-        },
-        label: "Confirmar",
-      },
-      content: (
-        <Text
-          label={`Você tem certeza que deseja excluir esta propriedade? (${property.name})`}
-        />
-      ),
-      cancelButton: {
-        label: "Cancelar",
-      },
-    });
-  };
 
   return (
     <FlexColumn sx={{ width: "100%" }}>
-      {properties?.length ? (
+      {values.properties?.length ? (
         <Grid
           spacing={4}
           containerStyles={{
             height: "inherit",
           }}
-          items={properties.map((property) => ({
+          items={values.properties.map((property) => ({
             item: (
               <Card
                 fullHeight
@@ -93,13 +54,13 @@ function Properties() {
                       label="Editar"
                       variant="text"
                       size="small"
-                      onClick={() => navigate(property._id)}
+                      onClick={() => navigate(`/properties/${property._id}`)}
                     />
                     <IconButton
                       type="error"
                       size="small"
                       icon={<DeleteIcon />}
-                      onClick={() => handleDelete(property)}
+                      onClick={() => values.deleteProperty(property)}
                     />
                   </>
                 }

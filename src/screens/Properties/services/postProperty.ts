@@ -1,7 +1,7 @@
 import Property, { PropertyType } from "../../../models/Property.ts";
 import request from "../../../helpers/request.ts";
 
-type Data = {
+export type CreatePropertyProps = {
   name: string;
   type: PropertyType | "";
   city?: string;
@@ -11,9 +11,9 @@ type Data = {
   image?: string;
 };
 
-type Field = keyof Data;
+type Field = keyof CreatePropertyProps;
 
-function postProperty(data: Data): Promise<Property> {
+function postProperty(data: CreatePropertyProps): Promise<Property> {
   const formData = new FormData();
   Object.keys(data).forEach((field: string) => {
     if (data && data[field as Field]) {

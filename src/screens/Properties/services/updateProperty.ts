@@ -1,7 +1,7 @@
 import Property, { PropertyType } from "../../../models/Property.ts";
 import request from "../../../helpers/request.ts";
 
-type Data = {
+export type UpdatePropertyProps = {
   name?: string;
   type?: PropertyType | "";
   city?: string;
@@ -11,13 +11,13 @@ type Data = {
   image?: string;
 };
 
-type Field = keyof Data;
+type Field = keyof UpdatePropertyProps;
 
 function updateProperty({
   id,
   data,
 }: {
-  data: Data;
+  data: UpdatePropertyProps;
   id: string;
 }): Promise<Property> {
   const formData = new FormData();

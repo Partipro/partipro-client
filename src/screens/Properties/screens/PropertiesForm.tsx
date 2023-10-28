@@ -1,58 +1,24 @@
-import { useEffect } from "react";
 import { compact } from "lodash";
 import { connect } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "../../../components/feedback/Dialog.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
 import Grid from "../../../components/layout/Grid.tsx";
-import useMutation from "../../../hooks/useMutation.tsx";
-import postProperty from "../services/postProperty.ts";
 import useForm from "../../../hooks/useForm.tsx";
 import { required } from "../../../helpers/validations.ts";
 import Select from "../../../components/inputs/Select.tsx";
 import { PropertyType } from "../../../models/Property.ts";
-import useQuery from "../../../hooks/useQuery.tsx";
-import getPropertyById from "../services/getPropertyById.ts";
 import FileUpload from "../../../components/inputs/FileUpload.tsx";
-import updateProperty from "../services/updateProperty.ts";
-import { useNotification } from "../../../context/NotificationContext.tsx";
+import useProperties from "../hooks/useProperties.tsx";
 
 function PropertiesForm() {
-  const { notification } = useNotification();
+  const [values] = useProperties();
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const { data: property, refetch: fetchById } = useQuery({
-    autoStart: false,
-    queryKey: ["id", params.id],
-    service: getPropertyById,
-  });
-
-  const [doCreate] = useMutation({
-    service: postProperty,
-    onSuccess: () => {
-      notification({
-        message: "Propriedade registrada com sucesso",
-        type: "success",
-      });
-      navigate(-1);
-    },
-  });
-
-  const [doUpdate] = useMutation({
-    service: updateProperty,
-    onSuccess: () => {
-      notification({
-        message: "Propriedade atualizada com sucesso",
-        type: "success",
-      });
-      navigate(-1);
-    },
-  });
-
   const [formik] = useForm({
-    initialValues: property || {
+    initialValues: values.property || {
       name: "",
       type: PropertyType.COMMERCIAL,
       address: "",
@@ -74,18 +40,12 @@ function PropertiesForm() {
     },
     onSubmit: (data) => {
       if (params.id) {
-        doUpdate.mutate({ id: params.id, data });
+        values.updateProperty({ id: params.id, values: data });
       } else {
-        doCreate.mutate(data);
+        values.createProperties(data);
       }
     },
   });
-
-  useEffect(() => {
-    if (params.id) {
-      fetchById({ queryKey: ["id", params.id] });
-    }
-  }, [params.id]);
 
   return (
     <Dialog
