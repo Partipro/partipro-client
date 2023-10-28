@@ -1,5 +1,23 @@
 import React, { useCallback, useMemo, useState } from "react";
 import Snackbar from "../components/feedback/Snackbar.tsx";
+import Dialog from "../components/feedback/Dialog.tsx";
+
+type DialogProps = {
+  saveButton?:
+    | {
+        label?: string;
+        onClick?: () => void;
+      }
+    | boolean;
+  cancelButton?:
+    | {
+        label: string;
+      }
+    | boolean;
+  content?: React.ReactNode;
+  title?: string;
+  onClose?: () => void;
+};
 
 type NotificationContextProps = {
   notification: ({
@@ -9,10 +27,18 @@ type NotificationContextProps = {
     message: string;
     type: "error" | "success";
   }) => any;
+  dialog: ({
+    title,
+    content,
+    onClose,
+    saveButton,
+    cancelButton,
+  }: DialogProps) => any;
 };
 
 const NotificationContext = React.createContext<NotificationContextProps>({
   notification: ({}) => false,
+  dialog: ({}) => false,
 });
 
 type NotificationContextProviderProps = { children: React.ReactNode };
@@ -24,6 +50,7 @@ function NotificationContextProvider({
     message?: string;
     type?: "error" | "success";
   }>({});
+  const [dialogData, setDialogData] = useState<DialogProps | null>(null);
 
   const handleNotification = useCallback(
     ({ message, type }: { message: string; type: "error" | "success" }) => {
@@ -32,9 +59,14 @@ function NotificationContextProvider({
     [],
   );
 
+  const handleDialog = useCallback((props: DialogProps) => {
+    setDialogData(props);
+  }, []);
+
   const value = useMemo(
     () => ({
       notification: handleNotification,
+      dialog: handleDialog,
     }),
     [notificationData],
   );
@@ -51,6 +83,19 @@ function NotificationContextProvider({
           type={notificationData.type}
         />
       ) : null}
+      <Dialog
+        open={!!dialogData}
+        saveButton={dialogData?.saveButton}
+        cancelButton={dialogData?.cancelButton}
+        width="sm"
+        title={dialogData?.title}
+        onClose={() => {
+          dialogData?.onClose?.();
+          setDialogData(null);
+        }}
+      >
+        {dialogData?.content}
+      </Dialog>
     </NotificationContext.Provider>
   );
 }
