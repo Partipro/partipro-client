@@ -72,6 +72,7 @@ function MenuContent() {
         icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
           <PersonIcon sx={{ color }} />
         ),
+        action: "Novo locatário",
       },
       {
         label: "Financeiro",
