@@ -1,3 +1,4 @@
+import("./Register.tsx");
 import { useState } from "react";
 import { EmailOutlined, LockOutlined } from "@mui/icons-material";
 import login from "../services/login.ts";
