@@ -6,16 +6,16 @@ import TextField from "../../../components/inputs/TextField.tsx";
 import Grid from "../../../components/layout/Grid.tsx";
 import useForm from "../../../hooks/useForm.tsx";
 import { required } from "../../../helpers/validations.ts";
-import { useRenters } from "../context/RentersContext.tsx";
+import useRenters from "../hooks/useRenters.tsx";
 
 function RentersForm() {
-  const { renter, createRenter, updateRenter } = useRenters();
+  const [renter] = useRenters();
 
   const params = useParams();
   const navigate = useNavigate();
 
   const [formik] = useForm({
-    initialValues: renter || {
+    initialValues: renter.renter || {
       name: "",
       business: "",
     },
@@ -31,9 +31,9 @@ function RentersForm() {
     },
     onSubmit: (data) => {
       if (params.id) {
-        updateRenter({ id: params.id, values: data });
+        renter.updateRenter({ id: params.id, values: data });
       } else {
-        createRenter(data);
+        renter.createRenter(data);
       }
     },
   });

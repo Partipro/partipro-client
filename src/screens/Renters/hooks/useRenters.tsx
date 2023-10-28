@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import Renter from "../../../models/Renter.ts";
 import useQuery from "../../../hooks/useQuery.tsx";
 import getRenters from "../services/getRenters.ts";
@@ -15,7 +15,7 @@ import { useNotification } from "../../../context/NotificationContext.tsx";
 import deleteRenterService from "../services/deleteRenter.ts";
 import { Text } from "../../../components/data-display/Typography.tsx";
 
-type RentersContext = {
+type UseRentersProps = {
   renters?: Renter[];
   renter?: Renter;
   fetchRenters?: () => void;
@@ -30,18 +30,7 @@ type RentersContext = {
   }) => void;
 };
 
-const RentersContext = React.createContext<RentersContext>({
-  renters: [],
-  renter: undefined,
-  fetchRenters: () => false,
-  createRenter: () => false,
-  updateRenter: () => false,
-  deleteRenter: () => false,
-});
-
-type RentersContextProviderProps = { children: React.ReactNode };
-
-function RentersContextProvider({ children }: RentersContextProviderProps) {
+function useRenters() {
   const navigate = useNavigate();
   const params = useParams();
 
@@ -132,7 +121,7 @@ function RentersContextProvider({ children }: RentersContextProviderProps) {
     }
   }, [params.id]);
 
-  const values = useMemo(
+  const values = useMemo<UseRentersProps>(
     () => ({
       renters,
       fetchRenters,
@@ -143,11 +132,8 @@ function RentersContextProvider({ children }: RentersContextProviderProps) {
     }),
     [renters, renter],
   );
-  return (
-    <RentersContext.Provider value={values}>{children}</RentersContext.Provider>
-  );
+
+  return [values];
 }
 
-export default RentersContextProvider;
-
-export const useRenters = () => React.useContext(RentersContext);
+export default useRenters;

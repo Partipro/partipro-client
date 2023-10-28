@@ -3,13 +3,13 @@ import FlexRow from "../../../components/layout/FlexRow.tsx";
 import Table from "../../../components/data-display/Table.tsx";
 import { Link } from "../../../components/data-display/Typography.tsx";
 import Button from "../../../components/inputs/Button.tsx";
-import { useRenters } from "../context/RentersContext.tsx";
+import useRenters from "../hooks/useRenters.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "../../../components/inputs/IconButton.tsx";
 
 function Renters() {
   const navigate = useNavigate();
-  const { renters, deleteRenter } = useRenters();
+  const [renter] = useRenters();
 
   return (
     <FlexRow sx={{ width: "100%" }}>
@@ -17,7 +17,7 @@ function Renters() {
         noData={{
           action: <Link to="/renters/new" label="Registrar locatário" />,
         }}
-        datasource={renters || []}
+        datasource={renter.renters || []}
         columns={[
           {
             title: "Nome",
@@ -44,7 +44,7 @@ function Renters() {
                   type="error"
                   size="small"
                   icon={<DeleteIcon />}
-                  onClick={() => deleteRenter(row)}
+                  onClick={() => renter.deleteRenter(row)}
                 />
               </FlexRow>
             ),
