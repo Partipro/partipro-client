@@ -10,7 +10,7 @@ export type ButtonProps = {
   loading?: boolean;
   disabled?: boolean;
   htmlType?: "submit" | "button";
-  type?: "primary" | "secondary" | "success" | "info";
+  type?: "primary" | "secondary" | "success" | "info" | "error";
   size?: "small" | "medium" | "large";
 };
 
