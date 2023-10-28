@@ -7,6 +7,8 @@ const Register = lazy(
 );
 
 import MenuContent from "./components/others/MenuContent.tsx";
+import RentersForm from "./screens/Renters/screens/RentersForm.tsx";
+import RentersContext from "./screens/Renters/context/RentersContext.tsx";
 const Contracts = lazy(
   () => import("./screens/Contracts/screens/Contracts.tsx"),
 );
@@ -57,15 +59,19 @@ const protectedRoutes = createBrowserRouter([
       },
       {
         path: "/renters",
-        element: <Renters />,
+        element: (
+          <RentersContext>
+            <Renters />
+          </RentersContext>
+        ),
         children: [
           {
             path: "new",
-            element: <PropertiesForm />,
+            element: <RentersForm />,
           },
           {
             path: ":id",
-            element: <PropertiesForm />,
+            element: <RentersForm />,
           },
         ],
       },

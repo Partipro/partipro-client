@@ -6,7 +6,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Text } from "./Typography.tsx";
 import FlexRow from "../layout/FlexRow.tsx";
 import FlexColumn from "../layout/FlexColumn.tsx";
@@ -14,11 +13,12 @@ import FlexColumn from "../layout/FlexColumn.tsx";
 type Props<D> = {
   datasource: D[];
   columns: {
-    dataKey: keyof D;
+    dataKey?: keyof D;
     render?: (document: D) => React.ReactNode;
     title?: string;
     align?: "right" | "left" | "center";
     width?: number;
+    key: string;
   }[];
   noData?: {
     title?: string;
@@ -46,34 +46,55 @@ function Table<D extends object>({ datasource, columns, noData }: Props<D>) {
     );
   }
   return (
-    <TableContainer component={Paper}>
-      <MuiTable sx={{ width: "100%" }}>
+    <TableContainer>
+      <MuiTable sx={{ width: "100%", background: "#ffffff", borderRadius: 2 }}>
         <TableHead>
           <TableRow>
             {columns.map((column) => (
               <TableCell
+                key={column.key}
                 width={column.width}
                 align={column.align}
                 sx={{ padding: "8px 14px !important" }}
               >
-                <Text label={column.title || ""} weight="normal" />
+                <Text
+                  label={column.title || ""}
+                  weight="normal"
+                  size="medium"
+                />
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {columns.map((column) => {
-            return datasource.map((row) => {
-              const data = (row[column.dataKey] as string | number)?.toString();
-              return (
-                <TableRow
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>{data || column.render?.(row)}</TableCell>
-                </TableRow>
-              );
-            });
-          })}
+          {datasource.map((row, i) => (
+            <TableRow
+              key={(row as { _id: string })._id || i}
+              sx={{
+                "&:last-child td, &:last-child th": {
+                  border: 0,
+                  paddingBottom: "15px !important",
+                },
+              }}
+            >
+              {columns.map((column) => (
+                <>
+                  <TableCell
+                    sx={{ padding: "5px 14px !important" }}
+                    key={column.key}
+                    component="th"
+                    align={column.align}
+                    width={column.width}
+                    scope="row"
+                  >
+                    {(row[column?.dataKey || ("" as keyof D)] as
+                      | string
+                      | number) || column.render?.(row)}
+                  </TableCell>
+                </>
+              ))}
+            </TableRow>
+          ))}
         </TableBody>
       </MuiTable>
     </TableContainer>

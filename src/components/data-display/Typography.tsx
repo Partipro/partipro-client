@@ -1,8 +1,8 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
-import MuiLink from "@mui/material/Link";
 import { COLORS } from "../../constants";
 
 const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
@@ -139,14 +139,13 @@ function Title({
 }
 
 type LinkProps = {
-  size?: "extraSmall" | "small" | "large" | "medium";
   weight?: "normal" | "strong" | "medium";
   label: string;
   to: string;
   type?: "dark" | "secondary" | "light" | "primary";
 };
 
-function Link({ size = "small", weight = "strong", to, label }: LinkProps) {
+function Link({ weight = "strong", to, label }: LinkProps) {
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -160,15 +159,16 @@ function Link({ size = "small", weight = "strong", to, label }: LinkProps) {
         }}
         onClick={preventDefault}
       >
-        <MuiLink
-          variant={size}
-          color="#0a5694"
-          underline="always"
-          fontWeight={{ medium: 500, strong: 700, normal: 400 }[weight]}
-          href={to}
+        <RouterLink
+          to={to}
+          style={{
+            fontWeight: { medium: 500, strong: 700, normal: 400 }[weight],
+            color: "#0a5694",
+            fontSize: "13px",
+          }}
         >
           {label}
-        </MuiLink>
+        </RouterLink>
       </Box>
     </ThemeProvider>
   );

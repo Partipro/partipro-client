@@ -57,7 +57,10 @@ function Dialog({
           )}
           {saveButton && (
             <Button
-              onClick={(saveButton as { onClick?: () => void })?.onClick}
+              onClick={() => {
+                (saveButton as { onClick?: () => void })?.onClick?.();
+                onClose();
+              }}
               htmlType="submit"
               label={(saveButton as { label: string }).label || "Save"}
             />
