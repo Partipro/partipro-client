@@ -1,3 +1,4 @@
+import("./PropertiesForm.tsx");
 import { Outlet, useNavigate } from "react-router-dom";
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
 import useQuery from "../../../hooks/useQuery.tsx";
@@ -8,8 +9,15 @@ import { Text } from "../../../components/data-display/Typography.tsx";
 import Chip from "../../../components/data-display/Chip.tsx";
 import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
+import useMutation from "../../../hooks/useMutation.tsx";
+import deleteProperty from "../services/deleteProperty.ts";
+import { useNotification } from "../../../context/NotificationContext.tsx";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "../../../components/inputs/IconButton.tsx";
+import Property from "../../../models/Property.ts";
 
 function Properties() {
+  const { notification, dialog } = useNotification();
   const navigate = useNavigate();
 
   const { data: properties } = useQuery({
@@ -17,6 +25,36 @@ function Properties() {
     queryKey: ["name", ""],
     service: getProperties,
   });
+
+  const [doDelete] = useMutation({
+    service: deleteProperty,
+    onSuccess: () => {
+      notification({
+        message: "Propriedade deletada com sucesso",
+        type: "success",
+      });
+    },
+  });
+
+  const handleDelete = (property: Property) => {
+    dialog({
+      saveButton: {
+        onClick: () => {
+          doDelete.mutate(property._id);
+        },
+        label: "Confirmar",
+      },
+      content: (
+        <Text
+          label={`Você tem certeza que deseja excluir esta propriedade? (${property.name})`}
+        />
+      ),
+      cancelButton: {
+        label: "Cancelar",
+      },
+    });
+  };
+
   return (
     <FlexColumn sx={{ width: "100%" }}>
       {properties?.length ? (
@@ -55,6 +93,11 @@ function Properties() {
                       label="Editar"
                       variant="text"
                       onClick={() => navigate(property._id)}
+                    />
+                    <IconButton
+                      type="error"
+                      icon={<DeleteIcon />}
+                      onClick={() => handleDelete(property)}
                     />
                   </>
                 }
