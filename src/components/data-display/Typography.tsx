@@ -1,7 +1,11 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material";
+import Box from "@mui/material/Box";
+import MuiLink from "@mui/material/Link";
 import { COLORS } from "../../constants";
+
+const preventDefault = (event: React.SyntheticEvent) => event.preventDefault();
 
 declare module "@mui/material/styles" {
   interface TypographyVariants {
@@ -134,4 +138,40 @@ function Title({
   );
 }
 
-export { Text, Title };
+type LinkProps = {
+  size?: "extraSmall" | "small" | "large" | "medium";
+  weight?: "normal" | "strong" | "medium";
+  label: string;
+  to: string;
+  type?: "dark" | "secondary" | "light" | "primary";
+};
+
+function Link({ size = "small", weight = "strong", to, label }: LinkProps) {
+  return (
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          "& > :not(style) ~ :not(style)": {
+            ml: 2,
+          },
+        }}
+        onClick={preventDefault}
+      >
+        <MuiLink
+          variant={size}
+          color="#0a5694"
+          underline="always"
+          fontWeight={{ medium: 500, strong: 700, normal: 400 }[weight]}
+          href={to}
+        >
+          {label}
+        </MuiLink>
+      </Box>
+    </ThemeProvider>
+  );
+}
+
+export { Text, Title, Link };
