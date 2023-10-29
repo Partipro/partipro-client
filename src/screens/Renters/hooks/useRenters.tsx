@@ -38,7 +38,7 @@ function useRenters() {
 
   const { data: renters, refetch: fetchRenters } = useQuery({
     autoStart: true,
-    queryKey: ["name", ""],
+    queryKey: ["data", { name: "", business: "" }],
     service: getRenters,
   });
 
