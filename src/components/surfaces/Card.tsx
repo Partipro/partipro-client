@@ -2,11 +2,11 @@ import React from "react";
 import MuiCard from "@mui/material/Card";
 import { CardActions, CardContent, CardMedia } from "@mui/material";
 import Block from "../layout/Block.tsx";
-import { Text } from "../data-display/Typography.tsx";
+import FlexRow from "../layout/FlexRow.tsx";
 
 type Props = {
   src?: string;
-  title?: string;
+  title?: React.ReactNode;
   children?: React.ReactNode;
   actions?: React.ReactNode;
   info?: React.ReactNode;
@@ -33,7 +33,7 @@ function Card({ src, title, children, actions, info, fullHeight }: Props) {
         )}
         {src && <CardMedia height={150} component="img" image={src} />}
         <CardContent>
-          {title && <Text label={title} weight="strong" size="large" />}
+          <FlexRow sx={{ justifyContent: "start" }}>{title}</FlexRow>
           {children}
         </CardContent>
       </div>
