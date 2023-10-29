@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
 import Grid from "../../../components/layout/Grid.tsx";
 import Card from "../../../components/surfaces/Card.tsx";
-import { Text } from "../../../components/data-display/Typography.tsx";
+import { Link, Text } from "../../../components/data-display/Typography.tsx";
 import Chip from "../../../components/data-display/Chip.tsx";
 import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
@@ -47,7 +47,14 @@ function Properties() {
                     ? `${import.meta.env.VITE_ASSETS_URL}/${property.image}`
                     : "https://media.istockphoto.com/id/1128826884/pt/vetorial/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-moment.jpg?s=170667a&w=0&k=20&c=W1UzMnnyqtdNBowZVk_JtR_dP0xFajvJvYCG5zL4NWU="
                 }
-                title={property.name}
+                title={
+                  <Link
+                    label={property.name}
+                    size="large"
+                    to={`/properties/${property._id}/details`}
+                    weight="strong"
+                  />
+                }
                 actions={
                   <>
                     <Button
