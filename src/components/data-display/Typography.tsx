@@ -142,6 +142,7 @@ type LinkProps = {
   weight?: "normal" | "strong" | "medium";
   label: string;
   to?: string;
+  size?: "extraSmall" | "small" | "medium" | "large";
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   type?: "secondary" | "primary" | "dark";
 };
@@ -162,6 +163,7 @@ function Link({
   weight = "strong",
   to,
   label,
+  size = "small",
   onClick,
   type = "primary",
 }: LinkProps) {
@@ -188,7 +190,12 @@ function Link({
               secondary: COLORS.SECONDARY,
               dark: "#000000",
             }[type],
-            fontSize: "13px",
+            fontSize: {
+              extraSmall: "9px",
+              small: "12px",
+              medium: "14px",
+              large: "16px",
+            }[size],
           }}
         >
           {label}
