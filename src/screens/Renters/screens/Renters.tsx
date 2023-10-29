@@ -6,18 +6,21 @@ import Button from "../../../components/inputs/Button.tsx";
 import useRenters from "../hooks/useRenters.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "../../../components/inputs/IconButton.tsx";
+import FlexColumn from "../../../components/layout/FlexColumn.tsx";
+import RentersFilters from "../components/RentersFilters.tsx";
 
 function Renters() {
   const navigate = useNavigate();
-  const [renter] = useRenters();
+  const { renters, deleteRenter } = useRenters();
 
   return (
-    <FlexRow sx={{ width: "100%" }}>
+    <FlexColumn sx={{ width: "100%", gap: "20px" }}>
+      <RentersFilters />
       <Table
         noData={{
           action: <Link to="/renters/new" label="Registrar locatário" />,
         }}
-        datasource={renter.renters || []}
+        datasource={renters || []}
         columns={[
           {
             title: "Nome",
@@ -44,7 +47,7 @@ function Renters() {
                   type="error"
                   size="small"
                   icon={<DeleteIcon />}
-                  onClick={() => renter.deleteRenter(row)}
+                  onClick={() => deleteRenter(row)}
                 />
               </FlexRow>
             ),
@@ -52,7 +55,7 @@ function Renters() {
         ]}
       />
       <Outlet />
-    </FlexRow>
+    </FlexColumn>
   );
 }
 

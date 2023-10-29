@@ -9,13 +9,13 @@ import { required } from "../../../helpers/validations.ts";
 import useRenters from "../hooks/useRenters.tsx";
 
 function RentersForm() {
-  const [renter] = useRenters();
+  const { renter, updateRenter, createRenter } = useRenters();
 
   const params = useParams();
   const navigate = useNavigate();
 
   const [formik] = useForm({
-    initialValues: renter.renter || {
+    initialValues: renter || {
       name: "",
       business: "",
     },
@@ -31,9 +31,9 @@ function RentersForm() {
     },
     onSubmit: (data) => {
       if (params.id) {
-        renter.updateRenter({ id: params.id, values: data });
+        updateRenter({ id: params.id, values: data });
       } else {
-        renter.createRenter(data);
+        createRenter(data);
       }
     },
   });
