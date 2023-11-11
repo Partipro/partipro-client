@@ -13,7 +13,7 @@ import FlexColumn from "../layout/FlexColumn.tsx";
 type Props<D> = {
   datasource: D[];
   columns: {
-    dataKey?: keyof D;
+    dataKey?: keyof D | string;
     render?: (document: D) => React.ReactNode;
     title?: string;
     align?: "right" | "left" | "center";

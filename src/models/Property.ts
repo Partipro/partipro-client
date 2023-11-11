@@ -1,4 +1,5 @@
 import BaseModel from "./BaseModel.ts";
+import PropertyContract from "./PropertyContract.ts";
 
 export enum PropertyType {
   COMMERCIAL = "COMMERCIAL",
@@ -14,4 +15,5 @@ export default interface Property extends BaseModel {
   address: string;
   contract: string;
   image: string;
+  propertyContract: string | PropertyContract[];
 }
