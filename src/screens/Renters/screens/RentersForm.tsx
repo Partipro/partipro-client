@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "../../../components/feedback/Dialog.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
 import Grid from "../../../components/layout/Grid.tsx";
-import useForm from "../../../hooks/useForm.tsx";
+import useForm from "../../../hooks/core/useForm.tsx";
 import { required } from "../../../helpers/validations.ts";
 import useRenters from "../hooks/useRenters.tsx";
 

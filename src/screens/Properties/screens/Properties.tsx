@@ -1,4 +1,4 @@
-import useProperties from "../hooks/useProperties.tsx";
+import useProperties from "../../../hooks/features/useProperties.tsx";
 
 import("./PropertiesForm.tsx");
 import { Outlet, useNavigate } from "react-router-dom";

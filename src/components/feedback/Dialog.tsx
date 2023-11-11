@@ -4,7 +4,7 @@ import { DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import Button from "../inputs/Button.tsx";
 import useMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
-} from "../../hooks/useMediaQuery.tsx";
+} from "../../hooks/core/useMediaQuery.tsx";
 
 type Props = {
   open: boolean;

@@ -4,12 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import Dialog from "../../../components/feedback/Dialog.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
 import Grid from "../../../components/layout/Grid.tsx";
-import useForm from "../../../hooks/useForm.tsx";
+import useForm from "../../../hooks/core/useForm.tsx";
 import { required } from "../../../helpers/validations.ts";
 import Select from "../../../components/inputs/Select.tsx";
 import { PropertyType } from "../../../models/Property.ts";
 import FileUpload from "../../../components/inputs/FileUpload.tsx";
-import useProperties from "../hooks/useProperties.tsx";
+import useProperties from "../../../hooks/features/useProperties.tsx";
 
 function PropertiesForm() {
   const [values] = useProperties();

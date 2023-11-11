@@ -24,7 +24,7 @@ import { Link, Text } from "../data-display/Typography.tsx";
 import List from "../data-display/List.tsx";
 import useMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
-} from "../../hooks/useMediaQuery.tsx";
+} from "../../hooks/core/useMediaQuery.tsx";
 import Button from "../inputs/Button.tsx";
 import FlexColumn from "../layout/FlexColumn.tsx";
 import Avatar from "../data-display/Avatar.tsx";

@@ -5,7 +5,7 @@ import FlexColumn from "../../../components/layout/FlexColumn.tsx";
 import logo from "../../../assets/images/logo.png";
 import UseMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
-} from "../../../hooks/useMediaQuery.tsx";
+} from "../../../hooks/core/useMediaQuery.tsx";
 import Tabs from "../../../components/navigation/Tabs.tsx";
 
 function AuthenticationWrapper({ children }: { children?: React.ReactNode }) {

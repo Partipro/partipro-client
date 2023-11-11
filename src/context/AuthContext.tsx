@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import User from "../models/User.ts";
-import useQuery from "../hooks/useQuery.tsx";
+import useQuery from "../hooks/core/useQuery.tsx";
 import getUser from "../services/user/getUser.ts";
 import logout from "../services/auth/logout.ts";
 

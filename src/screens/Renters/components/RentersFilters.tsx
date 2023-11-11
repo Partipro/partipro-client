@@ -1,6 +1,6 @@
 import Grid from "../../../components/layout/Grid.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
-import useForm from "../../../hooks/useForm.tsx";
+import useForm from "../../../hooks/core/useForm.tsx";
 import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
 

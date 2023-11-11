@@ -1,17 +1,19 @@
 import { useEffect, useMemo } from "react";
-import useQuery from "../../../hooks/useQuery.tsx";
+import useQuery from "../core/useQuery.tsx";
 import { useNavigate, useParams } from "react-router-dom";
-import useMutation from "../../../hooks/useMutation.tsx";
-import { useNotification } from "../../../context/NotificationContext.tsx";
-import { Text } from "../../../components/data-display/Typography.tsx";
-import getProperties from "../services/getProperties.ts";
-import getPropertyById from "../services/getPropertyById.ts";
+import useMutation from "../core/useMutation.tsx";
+import { useNotification } from "../../context/NotificationContext.tsx";
+import { Text } from "../../components/data-display/Typography.tsx";
+import getProperties from "../../screens/Properties/services/getProperties.ts";
+import getPropertyById from "../../screens/Properties/services/getPropertyById.ts";
 import updatePropertyService, {
   UpdatePropertyProps,
-} from "../services/updateProperty.ts";
-import postProperty, { CreatePropertyProps } from "../services/postProperty.ts";
-import Property from "../../../models/Property.ts";
-import deletePropertySerivice from "../services/deleteProperty.ts";
+} from "../../screens/Properties/services/updateProperty.ts";
+import postProperty, {
+  CreatePropertyProps,
+} from "../../screens/Properties/services/postProperty.ts";
+import Property from "../../models/Property.ts";
+import deletePropertySerivice from "../../screens/Properties/services/deleteProperty.ts";
 
 type UsePropertiesProps = {
   properties?: Property[];
