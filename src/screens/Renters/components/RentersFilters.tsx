@@ -1,13 +1,14 @@
 import Grid from "../../../components/layout/Grid.tsx";
 import TextField from "../../../components/inputs/TextField.tsx";
 import useForm from "../../../hooks/useForm.tsx";
-import useRenters from "../hooks/useRenters.tsx";
 import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
 
-function RentersFilters() {
-  const { fetchRenters } = useRenters();
-
+function RentersFilters({
+  onFiltersSubmit,
+}: {
+  onFiltersSubmit: (data: { name: string; business: string }) => void;
+}) {
   const [formik] = useForm({
     initialValues: {
       name: "",
@@ -15,7 +16,7 @@ function RentersFilters() {
     },
     enableReinitialize: true,
     onSubmit: (data) => {
-      fetchRenters?.(data);
+      onFiltersSubmit(data);
     },
   });
   return (

@@ -31,9 +31,9 @@ function RentersForm() {
     },
     onSubmit: (data) => {
       if (params.id) {
-        updateRenter({ id: params.id, values: data });
+        updateRenter?.({ id: params.id, values: data });
       } else {
-        createRenter(data);
+        createRenter?.(data);
       }
     },
   });

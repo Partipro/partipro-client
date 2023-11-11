@@ -20,9 +20,9 @@ type UseRentersProps = {
   renter?: Renter;
   isLoading?: boolean;
   fetchRenters?: (searchParams: RentersSearchParams) => void;
-  createRenter: (data: CreateRenterProps) => void;
-  deleteRenter: (data: Renter) => void;
-  updateRenter: ({
+  createRenter?: (data: CreateRenterProps) => void;
+  deleteRenter?: (data: Renter) => void;
+  updateRenter?: ({
     id,
     values,
   }: {
