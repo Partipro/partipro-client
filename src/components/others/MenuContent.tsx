@@ -30,11 +30,15 @@ import FlexColumn from "../layout/FlexColumn.tsx";
 import Avatar from "../data-display/Avatar.tsx";
 import { useAuth } from "../../context/AuthContext.tsx";
 import Menu from "../navigation/Menu.tsx";
+import useProperties from "../../hooks/features/useProperties.tsx";
+import { ArrowLeft } from "@mui/icons-material";
 
 function MenuContent() {
   const theme = useTheme();
   const { user, handleLogout } = useAuth();
   const [isDesktop] = useMediaQuery(MEDIA_QUERY_BREAKPOINTS.MD);
+
+  const [propertyValues] = useProperties();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,8 +51,12 @@ function MenuContent() {
 
   const menuOpen = Boolean(anchorEl);
 
-  const currentRoute = location.pathname.split("/")[1];
+  const currentRoute =
+    location.pathname.split("/")[3] === "details"
+      ? `${location.pathname.split("/")[1]}-${location.pathname.split("/")[3]}`
+      : location.pathname.split("/")[1];
 
+  console.log(currentRoute);
   const menus = useMemo(() => {
     return [
       {
@@ -88,8 +96,17 @@ function MenuContent() {
           <CalculateOutlinedIcon sx={{ color }} />
         ),
       },
+      {
+        subMenu: true,
+        label: propertyValues?.property?.name || "Imóvel",
+        value: "properties-details",
+        icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+          <HomeWorkOutlinedIcon sx={{ color }} />
+        ),
+        previous: true,
+      },
     ];
-  }, []);
+  }, [propertyValues]);
 
   useEffect(() => {
     navigate(`/${currentRoute}`);
@@ -119,9 +136,20 @@ function MenuContent() {
       <AppBar
         position="fixed"
         open={open}
-        titleIcon={menus
-          .find((menu) => menu.value === currentRoute)
-          ?.icon({ color: COLORS.PRIMARY })}
+        preTitle={
+          <FlexRow aligned>
+            {menus.find((menu) => menu.value === currentRoute)?.previous && (
+              <IconButton
+                onClick={() => navigate(-1)}
+                edge="start"
+                icon={<ArrowLeft />}
+              />
+            )}
+            {menus
+              .find((menu) => menu.value === currentRoute)
+              ?.icon({ color: COLORS.PRIMARY })}
+          </FlexRow>
+        }
         label={menus.find((menu) => menu.value === currentRoute)?.label || ""}
         action={
           !open && (
@@ -164,7 +192,7 @@ function MenuContent() {
       >
         <Divider />
         <List
-          datasource={menus}
+          datasource={menus.filter((menu) => !menu.subMenu)}
           renderItems={({ label, icon, value }) => (
             <List.ItemButton
               selected={currentTab === value}

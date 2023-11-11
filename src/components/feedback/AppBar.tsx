@@ -12,7 +12,7 @@ const drawerWidth = 180;
 type MuiAppBarProps = {
   action?: React.ReactNode;
   label: string;
-  titleIcon?: React.ReactNode;
+  preTitle?: React.ReactNode;
   extra?: React.ReactNode;
   position?: "fixed" | "absolute" | "static";
 };
@@ -46,7 +46,7 @@ function AppBar({
   label,
   extra,
   open = false,
-  titleIcon,
+  preTitle,
 }: AppBarProps) {
   return (
     <StyledAppBar open={open} position={position}>
@@ -62,8 +62,8 @@ function AppBar({
         >
           <FlexRow sx={{ width: "fit-content", alignItems: "center" }}>
             {action}
-            <FlexRow sx={{ gap: "15px" }}>
-              {titleIcon}
+            <FlexRow sx={{ gap: "15px", alignItems: "center" }}>
+              {preTitle}
               <Title type="primary" level={4} weight="medium" label={label} />
             </FlexRow>
           </FlexRow>
