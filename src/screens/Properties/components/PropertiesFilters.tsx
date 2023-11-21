@@ -47,6 +47,7 @@ function PropertiesFilters({
                   value={formik.values.type}
                   onChange={formik.handleChange}
                   data={[
+                    { label: "Todos", value: "" },
                     { label: "Comercial", value: PropertyType.COMMERCIAL },
                     { label: "Residencial", value: PropertyType.RESIDENTIAL },
                   ]}
