@@ -25,6 +25,9 @@ function Button({
   return (
     <MuiButton
       {...props}
+      sx={{
+        fontSize: { small: 10, medium: 13, large: 16 }[size],
+      }}
       size={size}
       color={type}
       type={htmlType}

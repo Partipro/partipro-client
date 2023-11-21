@@ -37,7 +37,7 @@ function RentersTable({
           width: 150,
           title: "Ações",
           render: (row) => (
-            <FlexRow sx={{ gap: "10px" }}>
+            <FlexRow sx={{ gap: "10px", alignItems: "center" }}>
               <Button
                 label="Editar"
                 size="small"

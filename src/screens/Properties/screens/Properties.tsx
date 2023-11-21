@@ -11,13 +11,17 @@ import Button from "../../../components/inputs/Button.tsx";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "../../../components/inputs/IconButton.tsx";
+import PropertiesFilters from "../components/PropertiesFilters.tsx";
 
 function Properties() {
   const [values] = useProperties();
   const navigate = useNavigate();
 
   return (
-    <FlexColumn sx={{ width: "100%" }}>
+    <FlexColumn sx={{ width: "100%", gap: "20px" }}>
+      <PropertiesFilters
+        onFiltersSubmit={(data) => values.fetchProperties?.(data)}
+      />
       {values.properties?.length ? (
         <Grid
           spacing={4}

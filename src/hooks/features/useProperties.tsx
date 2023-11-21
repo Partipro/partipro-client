@@ -1,10 +1,12 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useQuery from "../core/useQuery.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import useMutation from "../core/useMutation.tsx";
 import { useNotification } from "../../context/NotificationContext.tsx";
 import { Text } from "../../components/data-display/Typography.tsx";
-import getProperties from "../../screens/Properties/services/getProperties.ts";
+import getProperties, {
+  PropertiesSearchParams,
+} from "../../screens/Properties/services/getProperties.ts";
 import getPropertyById from "../../screens/Properties/services/getPropertyById.ts";
 import updatePropertyService, {
   UpdatePropertyProps,
@@ -14,11 +16,12 @@ import postProperty, {
 } from "../../screens/Properties/services/postProperty.ts";
 import Property from "../../models/Property.ts";
 import deletePropertySerivice from "../../screens/Properties/services/deleteProperty.ts";
+import { RentersSearchParams } from "../../screens/Renters/services/getRenters.ts";
 
 type UsePropertiesProps = {
   properties?: Property[];
   property?: Property;
-  fetchProperties?: () => void;
+  fetchProperties?: (searchParams: PropertiesSearchParams) => void;
   createProperties: (data: CreatePropertyProps) => void;
   deleteProperty: (data: Property) => void;
   updateProperty: ({
@@ -34,11 +37,13 @@ function useProperties() {
   const navigate = useNavigate();
   const params = useParams();
 
+  const [searchParams, setSearchParams] = useState<PropertiesSearchParams>({});
+
   const { notification, dialog } = useNotification();
 
   const { data: properties, refetch: fetchProperties } = useQuery({
     autoStart: true,
-    queryKey: ["name", ""],
+    queryKey: ["params", searchParams],
     service: getProperties,
   });
 
@@ -121,16 +126,26 @@ function useProperties() {
     }
   }, [params.id]);
 
+  const handleFetchProperty = (data: RentersSearchParams) => {
+    Object.keys(data).forEach((key) => {
+      if (data[key as keyof RentersSearchParams] === "") {
+        delete data[key as keyof RentersSearchParams];
+      }
+    });
+    setSearchParams(data);
+    fetchProperties();
+  };
+
   const values = useMemo<UsePropertiesProps>(
     () => ({
       properties,
-      fetchProperties,
+      fetchProperties: handleFetchProperty,
       property,
       createProperties,
       updateProperty,
       deleteProperty,
     }),
-    [properties, property],
+    [properties, property, searchParams],
   );
 
   return [values];

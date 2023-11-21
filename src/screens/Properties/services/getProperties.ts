@@ -1,13 +1,13 @@
 import Property, { PropertyType } from "../../../models/Property.ts";
 import request from "../../../helpers/request.ts";
 
-type Params = {
+export type PropertiesSearchParams = {
   name?: string;
   city?: string;
-  type: PropertyType;
+  type?: PropertyType | "";
 };
 
-function getProperties(params: Params): Promise<Property[]> {
+function getProperties(params: PropertiesSearchParams): Promise<Property[]> {
   return request({
     url: "properties",
     params,
