@@ -28,6 +28,11 @@ function RentersTable({
           dataKey: "name",
         },
         {
+          title: "Email",
+          key: "email",
+          dataKey: "email",
+        },
+        {
           title: "Negócio",
           dataKey: "business",
           key: "business",

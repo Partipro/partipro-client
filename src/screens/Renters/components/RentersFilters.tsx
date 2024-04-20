@@ -7,11 +7,11 @@ import FlexRow from "../../../components/layout/FlexRow.tsx";
 function RentersFilters({
   onFiltersSubmit,
 }: {
-  onFiltersSubmit: (data: { name: string; business: string }) => void;
+  onFiltersSubmit: (data: { criteria: string; business: string }) => void;
 }) {
   const [formik] = useForm({
     initialValues: {
-      name: "",
+      criteria: "",
       business: "",
     },
     enableReinitialize: true,
@@ -28,9 +28,9 @@ function RentersFilters({
             {
               item: (
                 <TextField
-                  name="name"
-                  label="Nome"
-                  value={formik.values.name}
+                  name="criteria"
+                  label="Nome ou email"
+                  value={formik.values.criteria}
                   onChange={formik.handleChange}
                 />
               ),

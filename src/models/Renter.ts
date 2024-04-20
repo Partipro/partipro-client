@@ -5,4 +5,5 @@ export default interface Renter extends BaseModel {
   saasContract: string;
   business: string;
   email: string;
+  password: string;
 }

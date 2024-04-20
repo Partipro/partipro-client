@@ -49,6 +49,7 @@ function useRenters() {
     autoStart: true,
     queryKey: ["params", searchParams],
     service: getRenters,
+    queryHash: "getRenters",
   });
 
   const { data: renter, refetch: fetchById } = useQuery({

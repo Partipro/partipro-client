@@ -5,6 +5,7 @@ export type CreateRenterProps = {
   name: string;
   business?: string;
   email: string;
+  password: string;
 };
 
 function postRenter(data: CreateRenterProps): Promise<Renter> {

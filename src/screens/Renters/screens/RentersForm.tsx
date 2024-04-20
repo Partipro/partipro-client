@@ -18,13 +18,20 @@ function RentersForm() {
     initialValues: renter || {
       name: "",
       email: "",
+      password: "",
       business: "",
     },
     enableReinitialize: true,
     validate: (values) => {
-      let errors: { business?: string; name?: string; email?: string } = {};
+      let errors: {
+        business?: string;
+        name?: string;
+        email?: string;
+        password?: string;
+      } = {};
       errors.name = required(values.name);
       errors.email = required(values.email);
+      errors.password = required(values.password);
 
       if (!compact(Object.values(errors)).length) {
         errors = {};
@@ -76,6 +83,24 @@ function RentersForm() {
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   helperText={formik.touched.email ? formik.errors.email : ""}
+                />
+              ),
+              sm: 6,
+              xs: 12,
+            },
+            {
+              item: (
+                <TextField
+                  name="password"
+                  label="Senha"
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  helperText={
+                    formik.touched.password ? formik.errors.password : ""
+                  }
                 />
               ),
               sm: 6,
