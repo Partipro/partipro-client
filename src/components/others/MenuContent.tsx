@@ -32,6 +32,7 @@ import { useAuth } from "../../context/AuthContext.tsx";
 import Menu from "../navigation/Menu.tsx";
 import useProperties from "../../hooks/features/useProperties.tsx";
 import { ArrowLeft } from "@mui/icons-material";
+import { Roles } from "../../models/User.ts";
 
 function MenuContent() {
   const theme = useTheme();
@@ -57,6 +58,24 @@ function MenuContent() {
       : location.pathname.split("/")[1];
 
   const menus = useMemo(() => {
+    if (user && user.role === Roles.RENTER) {
+      return [
+        {
+          label: "Contratos",
+          value: "contracts",
+          icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+            <DescriptionOutlinedIcon sx={{ color }} />
+          ),
+        },
+        {
+          label: "Financeiro",
+          value: "finances",
+          icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
+            <AttachMoneyOutlinedIcon sx={{ color }} />
+          ),
+        },
+      ];
+    }
     return [
       {
         label: "Contratos",
@@ -106,7 +125,7 @@ function MenuContent() {
         previous: true,
       },
     ];
-  }, [propertyValues]);
+  }, [propertyValues, user]);
 
   useEffect(() => {
     navigate(`/${currentRoute}`);
@@ -248,11 +267,15 @@ function MenuContent() {
         open={menuOpen}
         onClose={() => setAnchorEl(null)}
         menus={[
-          {
-            label: "Planos",
-            onClick: () => navigate("/plans"),
-            icon: <CurrencyExchangeIcon />,
-          },
+          ...(user?.role !== Roles.RENTER
+            ? [
+                {
+                  label: "Planos",
+                  onClick: () => navigate("/plans"),
+                  icon: <CurrencyExchangeIcon />,
+                },
+              ]
+            : []),
           {
             label: "Sair",
             onClick: handleLogoutClick,

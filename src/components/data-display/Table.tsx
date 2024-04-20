@@ -9,6 +9,8 @@ import TableRow from "@mui/material/TableRow";
 import { Text } from "./Typography.tsx";
 import FlexRow from "../layout/FlexRow.tsx";
 import FlexColumn from "../layout/FlexColumn.tsx";
+import { useAuth } from "../../context/AuthContext.tsx";
+import { Roles } from "../../models/User.ts";
 
 type Props<D> = {
   datasource: D[];
@@ -27,6 +29,8 @@ type Props<D> = {
 };
 
 function Table<D extends object>({ datasource, columns, noData }: Props<D>) {
+  const { user } = useAuth();
+
   if (!datasource.length) {
     return (
       <FlexRow
@@ -45,7 +49,7 @@ function Table<D extends object>({ datasource, columns, noData }: Props<D>) {
             size="medium"
             label={noData?.title || "Nenhum registro encontrado"}
           />
-          {noData?.action}
+          {user?.role !== Roles.RENTER ? noData?.action : ""}
         </FlexColumn>
       </FlexRow>
     );
