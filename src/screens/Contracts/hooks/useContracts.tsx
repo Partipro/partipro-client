@@ -38,8 +38,13 @@ function useContracts() {
   });
 
   useEffect(() => {
-    fetchContracts();
-  }, []);
+    if (contracts?.total) {
+      setPagination((prev) => ({
+        ...prev,
+        props: { total: contracts.total, current: 1 },
+      }));
+    }
+  }, [contracts]);
 
   const [doCreate] = useMutation({
     service: postContract,
@@ -64,7 +69,6 @@ function useContracts() {
       }
     });
     setSearchParams(data);
-    fetchContracts();
   };
 
   const values = useMemo<UseContractsProps>(
