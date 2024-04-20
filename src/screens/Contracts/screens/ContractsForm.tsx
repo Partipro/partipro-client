@@ -11,6 +11,7 @@ import useContracts from "../hooks/useContracts.tsx";
 import RentersAutoComplete from "../../../components/inputs/RentersAutoComplete.tsx";
 import { CreatePropertyContractProps } from "../services/postContract.ts";
 import DatePicker from "../../../components/inputs/DatePicker.tsx";
+import * as dayjs from "dayjs";
 
 function ContractsForm() {
   const [values] = useContracts();
@@ -49,7 +50,10 @@ function ContractsForm() {
       if (params.id) {
         // values.updateProperty({ id: params.id, values: data });
       } else {
-        values.createContract(data as CreatePropertyContractProps);
+        values.createContract({
+          ...data,
+          expiresAt: dayjs(data.expiresAt).format(),
+        } as CreatePropertyContractProps);
       }
     },
   });

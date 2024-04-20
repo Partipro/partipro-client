@@ -16,7 +16,6 @@ import postProperty, {
 } from "../../screens/Properties/services/postProperty.ts";
 import Property from "../../models/Property.ts";
 import deletePropertySerivice from "../../screens/Properties/services/deleteProperty.ts";
-import { RentersSearchParams } from "../../services/renter/getRenters.ts";
 
 type UsePropertiesProps = {
   properties?: Property[];
@@ -126,10 +125,10 @@ function useProperties() {
     }
   }, [params.id]);
 
-  const handleFetchProperty = (data: RentersSearchParams) => {
+  const handleFetchProperty = (data: PropertiesSearchParams) => {
     Object.keys(data).forEach((key) => {
-      if (data[key as keyof RentersSearchParams] === "") {
-        delete data[key as keyof RentersSearchParams];
+      if (data[key as keyof PropertiesSearchParams] === "") {
+        delete data[key as keyof PropertiesSearchParams];
       }
     });
     setSearchParams(data);
