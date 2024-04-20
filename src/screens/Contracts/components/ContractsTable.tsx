@@ -55,12 +55,12 @@ function ContractsTable({ contracts }: { contracts: PropertyContract[] }) {
         {
           title: "Locatário",
           key: "locatario",
-          render: (row) => (row.renter as Renter).name,
+          render: (row) => (row.renter as Renter)?.name,
         },
         {
           title: "Propriedade",
           key: "property",
-          render: (row) => (row.property as Property).name,
+          render: (row) => (row.property as Property)?.name,
         },
         {
           title: "Assinado em",
