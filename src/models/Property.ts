@@ -13,7 +13,7 @@ export default interface Property extends BaseModel {
   city: string;
   type: PropertyType;
   address: string;
-  contract: string;
+  saasContract: string;
   image: string;
   propertyContract: string | PropertyContract[];
 }
