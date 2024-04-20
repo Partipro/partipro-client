@@ -56,7 +56,6 @@ function MenuContent() {
       ? `${location.pathname.split("/")[1]}-${location.pathname.split("/")[3]}`
       : location.pathname.split("/")[1];
 
-  console.log(currentRoute);
   const menus = useMemo(() => {
     return [
       {
@@ -65,6 +64,7 @@ function MenuContent() {
         icon: ({ color = COLORS.SECONDARY }: { color?: string }) => (
           <DescriptionOutlinedIcon sx={{ color }} />
         ),
+        action: "Novo contrato",
       },
       {
         label: "Imóveis",
