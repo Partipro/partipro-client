@@ -25,6 +25,7 @@ const VisuallyHiddenInput = styled("input")({
 type Props = {
   name: string;
   value?: any;
+  accept?: "image/*" | "application/pdf";
   onChange?: (file: File | null) => void;
   error?: boolean;
 } & Omit<ButtonProps, "startIcon" | "endIcon" | "htmlType">;
@@ -35,6 +36,7 @@ function FileUpload({
   label = "Imagem do imóvel",
   type = "primary",
   disabled,
+  accept = "image/*",
   onClick,
   value,
   name,
@@ -79,7 +81,7 @@ function FileUpload({
           value={value}
           onChange={handleFileUpload}
           disabled={disabled}
-          accept="image/*"
+          accept={accept}
           type="file"
         />
       </Button>
