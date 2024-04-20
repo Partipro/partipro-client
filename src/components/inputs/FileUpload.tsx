@@ -102,14 +102,18 @@ function FileUpload({
         saveButton={false}
         cancelButton={false}
         open={openPreview}
-        width="xs"
+        width={accept !== "application/pdf" ? "xs" : "md"}
         onClose={() => setOpenPreview(false)}
       >
-        <img
-          src={imageUrl}
-          style={{ width: "-webkit-fill-available" }}
-          alt="Uploaded Image"
-        />
+        {accept !== "application/pdf" ? (
+          <img
+            src={imageUrl}
+            style={{ width: "-webkit-fill-available" }}
+            alt="Uploaded Image"
+          />
+        ) : (
+          <iframe src={imageUrl} width="100%" height="600px" />
+        )}
       </Dialog>
     </FlexRow>
   );
