@@ -1,21 +1,39 @@
+import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import PropertyContract from "../../../models/PropertyContract.ts";
 import { Paginated } from "../../../models/Paginated.ts";
 import useQuery from "../../../hooks/core/useQuery.tsx";
-import getContracts from "../services/getContracts.ts";
+import getContracts, {
+  ContractsSearchParams,
+} from "../services/getContracts.ts";
+import postContract, {
+  CreatePropertyContractProps,
+} from "../services/postContract.ts";
+import { useNotification } from "../../../context/NotificationContext.tsx";
+import useMutation from "../../../hooks/core/useMutation.tsx";
 
 type UseContractsProps = {
   contracts?: Paginated<PropertyContract>;
   contract?: PropertyContract;
+  createContract: (data: CreatePropertyContractProps) => void;
+  fetchContracts: (data: ContractsSearchParams) => void;
 };
 
 function useContracts() {
-  const [pagination, setPagination] = useState({ page: 1, pageSize: 15 });
-  // const { notification, dialog } = useNotification();
+  const navigate = useNavigate();
+
+  const [pagination, setPagination] = useState({
+    page: 1,
+    pageSize: 15,
+    props: { current: 1, total: 0 },
+  });
+  const [searchParams, setSearchParams] = useState({});
+
+  const { notification } = useNotification();
 
   const { data: contracts, refetch: fetchContracts } = useQuery({
     autoStart: true,
-    queryKey: ["params", { ...pagination }],
+    queryKey: ["params", { ...pagination, ...searchParams }],
     service: getContracts,
   });
 
@@ -23,36 +41,38 @@ function useContracts() {
     fetchContracts();
   }, []);
 
-  // const [doCreate] = useMutation({
-  //   service: postProperty,
-  //   onSuccess: () => {
-  //     fetchContracts();
-  //     notification({
-  //       message: "Propriedade registrada com sucesso",
-  //       type: "success",
-  //     });
-  //     navigate("/properties");
-  //   },
-  // });
+  const [doCreate] = useMutation({
+    service: postContract,
+    onSuccess: () => {
+      fetchContracts();
+      notification({
+        message: "Contrato registrada com sucesso",
+        type: "success",
+      });
+      navigate("/contracts");
+    },
+  });
 
-  // const createProperties = (values: CreatePropertyProps) => {
-  //   doCreate.mutate(values);
-  // };
+  const createContract = (values: CreatePropertyContractProps) => {
+    doCreate.mutate(values);
+  };
 
-  // const handleFetchContracts = (data: RentersSearchParams) => {
-  //   Object.keys(data).forEach((key) => {
-  //     if (data[key as keyof RentersSearchParams] === "") {
-  //       delete data[key as keyof RentersSearchParams];
-  //     }
-  //   });
-  //   setSearchParams(data);
-  //   fetchContracts();
-  // };
+  const handleFetchContracts = (data: ContractsSearchParams) => {
+    Object.keys(data).forEach((key) => {
+      if (data[key as keyof ContractsSearchParams] === "") {
+        delete data[key as keyof ContractsSearchParams];
+      }
+    });
+    setSearchParams(data);
+    fetchContracts();
+  };
 
   const values = useMemo<UseContractsProps>(
     () => ({
       contracts,
       // contract,
+      fetchContracts: handleFetchContracts,
+      createContract,
     }),
     [contracts],
   );
