@@ -4,7 +4,8 @@ import User from "./User.ts";
 
 export default interface PropertyContract extends BaseModel {
   signedAt: string;
-  active: boolean;
+  status: string;
+  document: string;
   owner: string | User;
   renter: Renter | string;
 }
