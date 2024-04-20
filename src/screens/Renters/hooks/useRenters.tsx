@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Renter from "../../../models/Renter.ts";
 import useQuery from "../../../hooks/core/useQuery.tsx";
-import getRenters, { RentersSearchParams } from "../services/getRenters.ts";
+import getRenters, {
+  RentersSearchParams,
+} from "../../../services/renter/getRenters.ts";
 import getRenterById from "../services/getRenterById.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import useMutation from "../../../hooks/core/useMutation.tsx";

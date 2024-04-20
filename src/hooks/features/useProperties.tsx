@@ -16,7 +16,7 @@ import postProperty, {
 } from "../../screens/Properties/services/postProperty.ts";
 import Property from "../../models/Property.ts";
 import deletePropertySerivice from "../../screens/Properties/services/deleteProperty.ts";
-import { RentersSearchParams } from "../../screens/Renters/services/getRenters.ts";
+import { RentersSearchParams } from "../../services/renter/getRenters.ts";
 
 type UsePropertiesProps = {
   properties?: Property[];
