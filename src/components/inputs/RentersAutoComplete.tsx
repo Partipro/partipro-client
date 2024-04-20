@@ -39,7 +39,7 @@ function RentersAutoComplete({
     <FormControl variant="standard" sx={{ width: "100%" }}>
       <Autocomplete
         options={(renters || []).map((d) => ({
-          label: d.name,
+          label: `${d.name} - ${d.email}`,
           id: d._id,
         }))}
         onChange={(_e, value) => onChange(value?.id || "")}
