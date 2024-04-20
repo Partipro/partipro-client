@@ -7,6 +7,7 @@ export enum PropertyContractStatus {
   AWAITING_SIGN = "AWAITING_SIGN",
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",
+  CANCELED = "CANCELED",
 }
 
 export default interface PropertyContract extends BaseModel {
