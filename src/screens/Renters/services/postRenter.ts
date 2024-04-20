@@ -4,6 +4,7 @@ import Renter from "../../../models/Renter.ts";
 export type CreateRenterProps = {
   name: string;
   business?: string;
+  email: string;
 };
 
 function postRenter(data: CreateRenterProps): Promise<Renter> {

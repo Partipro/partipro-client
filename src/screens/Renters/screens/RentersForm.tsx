@@ -17,12 +17,14 @@ function RentersForm() {
   const [formik] = useForm({
     initialValues: renter || {
       name: "",
+      email: "",
       business: "",
     },
     enableReinitialize: true,
     validate: (values) => {
-      let errors: { business?: string; name?: string } = {};
+      let errors: { business?: string; name?: string; email?: string } = {};
       errors.name = required(values.name);
+      errors.email = required(values.email);
 
       if (!compact(Object.values(errors)).length) {
         errors = {};
@@ -60,6 +62,20 @@ function RentersForm() {
                   value={formik.values.name}
                   onChange={formik.handleChange}
                   helperText={formik.touched.name ? formik.errors.name : ""}
+                />
+              ),
+              sm: 6,
+              xs: 12,
+            },
+            {
+              item: (
+                <TextField
+                  name="email"
+                  label="Email"
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  helperText={formik.touched.email ? formik.errors.email : ""}
                 />
               ),
               sm: 6,
