@@ -9,6 +9,7 @@ import FileUpload from "../../../components/inputs/FileUpload.tsx";
 import PropertiesAutoComplete from "../../../components/inputs/PropertiesAutoComplete.tsx";
 import useContracts from "../hooks/useContracts.tsx";
 import RentersAutoComplete from "../../../components/inputs/RentersAutoComplete.tsx";
+import { CreatePropertyContractProps } from "../services/postContract.ts";
 
 function ContractsForm() {
   const [values] = useContracts();
@@ -17,11 +18,9 @@ function ContractsForm() {
   const navigate = useNavigate();
 
   const [formik] = useForm({
-    initialValues: values.contract || {
-      property: "",
-      renter: "",
-      document: "",
-    },
+    initialValues:
+      values.contract ||
+      ({} as { property: string; renter: string; document: string }),
     enableReinitialize: true,
     validate: (values) => {
       let errors: { property?: string; renter?: string; document?: string } =
@@ -36,12 +35,11 @@ function ContractsForm() {
       return errors;
     },
     onSubmit: (data) => {
-      console.log(data);
-      // if (params.id) {
-      //   values.updateProperty({ id: params.id, values: data });
-      // } else {
-      //   values.createProperties(data);
-      // }
+      if (params.id) {
+        // values.updateProperty({ id: params.id, values: data });
+      } else {
+        values.createContract(data as CreatePropertyContractProps);
+      }
     },
   });
 
@@ -64,6 +62,7 @@ function ContractsForm() {
                   error={
                     formik.touched.property && Boolean(formik.errors.property)
                   }
+                  onChange={(value) => formik.setFieldValue("property", value)}
                   value={formik.values.property}
                   helperText={
                     formik.touched.property ? formik.errors.property : ""
@@ -78,6 +77,7 @@ function ContractsForm() {
                 <RentersAutoComplete
                   error={formik.touched.renter && Boolean(formik.errors.renter)}
                   value={formik.values.renter}
+                  onChange={(value) => formik.setFieldValue("renter", value)}
                   helperText={formik.touched.renter ? formik.errors.renter : ""}
                 />
               ),
