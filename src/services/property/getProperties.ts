@@ -1,5 +1,5 @@
-import Property, { PropertyType } from "../../../models/Property.ts";
-import request from "../../../helpers/request.ts";
+import Property, { PropertyType } from "../../models/Property.ts";
+import request from "../../helpers/request.ts";
 
 export type PropertiesSearchParams = {
   name?: string;

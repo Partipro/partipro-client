@@ -6,7 +6,7 @@ import { useNotification } from "../../context/NotificationContext.tsx";
 import { Text } from "../../components/data-display/Typography.tsx";
 import getProperties, {
   PropertiesSearchParams,
-} from "../../screens/Properties/services/getProperties.ts";
+} from "../../services/property/getProperties.ts";
 import getPropertyById from "../../screens/Properties/services/getPropertyById.ts";
 import updatePropertyService, {
   UpdatePropertyProps,
