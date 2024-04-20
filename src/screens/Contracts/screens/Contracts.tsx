@@ -1,9 +1,10 @@
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
+import ContractsTable from "../components/ContractsTable.tsx";
 
 function Contracts() {
   return (
-    <FlexColumn>
-      <div>Contracts</div>
+    <FlexColumn sx={{ width: "100%" }}>
+      <ContractsTable contracts={[]} />
     </FlexColumn>
   );
 }

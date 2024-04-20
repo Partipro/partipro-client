@@ -6,24 +6,24 @@ function ContractsTable({ contracts }: { contracts: PropertyContract[] }) {
   return (
     <Table
       noData={{
-        action: <Link to="/renters/new" label="Registrar locatário" />,
+        action: <Link to="/contracts/new" label="Adicionar contrato" />,
       }}
       datasource={contracts || []}
       columns={[
         {
-          title: "Ativo",
-          dataKey: "active",
-          key: "active",
-        },
-        {
-          title: "Assinado em",
-          key: "signedAt",
-          dataKey: "signedAt",
+          title: "Status",
+          dataKey: "status",
+          key: "status",
         },
         {
           title: "Locatário",
           key: "locatario",
           dataKey: "renter.name" as string,
+        },
+        {
+          title: "Assinado em",
+          key: "signedAt",
+          dataKey: "signedAt",
         },
         // {
         //   key: "actions",
