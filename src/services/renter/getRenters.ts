@@ -2,7 +2,7 @@ import Renter from "../../models/Renter.ts";
 import request from "../../helpers/request.ts";
 
 export type RentersSearchParams = {
-  name?: string;
+  criteria?: string;
   business?: string;
 };
 
