@@ -1,4 +1,4 @@
 export type Paginated<M> = {
-  docs: M[];
+  data: M[];
   total: number;
 };
