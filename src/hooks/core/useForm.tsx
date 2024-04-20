@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 
 type Props<D> = {
-  initialValues: D;
+  initialValues?: D;
   validate?: (values: D) => { [key: string]: string } | undefined;
   onSubmit: (values: D) => void | Promise<any>;
   enableReinitialize?: boolean;
@@ -14,7 +14,7 @@ function useForm<D extends object>({
   enableReinitialize = false,
 }: Props<D>) {
   const formik = useFormik({
-    initialValues,
+    initialValues: initialValues || ({} as D),
     validate,
     enableReinitialize,
     onSubmit,
