@@ -9,6 +9,9 @@ type Props = {
   fullWidth?: boolean;
   value: any;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?:
+    | React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
   error?: boolean;
   id?: string;
   helperText?: string;
