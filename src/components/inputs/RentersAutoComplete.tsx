@@ -11,9 +11,14 @@ type Props = {
   value: any;
   error?: boolean;
   helperText?: string;
+  onChange: (value: string) => void;
 };
 
-function RentersAutoComplete({ label = "Inquilino", ...props }: Props) {
+function RentersAutoComplete({
+  label = "Inquilino",
+  onChange,
+  ...props
+}: Props) {
   const [renterFilter, setRenterFilter] = useState("");
 
   const { data: renters, refetch: fetchRenters } = useQuery({
@@ -37,6 +42,8 @@ function RentersAutoComplete({ label = "Inquilino", ...props }: Props) {
           label: d.name,
           id: d._id,
         }))}
+        onChange={(_e, value) => onChange(value?.id || "")}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
         renderInput={(params) => (
           <TextField
             {...params}

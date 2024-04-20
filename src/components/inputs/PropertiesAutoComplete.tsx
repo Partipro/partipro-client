@@ -8,12 +8,17 @@ import TextField from "./TextField.tsx";
 type Props = {
   fullWidth?: boolean;
   label?: string;
+  onChange: (value: string) => void;
   value: any;
   error?: boolean;
   helperText?: string;
 };
 
-function PropertiesAutoComplete({ label = "Imóvel", ...props }: Props) {
+function PropertiesAutoComplete({
+  label = "Imóvel",
+  onChange,
+  ...props
+}: Props) {
   const [propertyFilter, setPropertyFilter] = useState("");
 
   const { data: properties, refetch: fetchProperties } = useQuery({
@@ -37,6 +42,8 @@ function PropertiesAutoComplete({ label = "Imóvel", ...props }: Props) {
           label: d.name,
           id: d._id,
         }))}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        onChange={(_e, value) => onChange(value?.id || "")}
         renderInput={(params) => (
           <TextField
             {...params}
