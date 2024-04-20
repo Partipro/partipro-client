@@ -5,6 +5,7 @@ export type CreatePropertyContractProps = {
   property: string;
   renter: string;
   document: string;
+  expiresAt: string;
 };
 
 type Field = keyof CreatePropertyContractProps;

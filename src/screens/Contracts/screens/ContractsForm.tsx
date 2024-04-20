@@ -10,6 +10,7 @@ import PropertiesAutoComplete from "../../../components/inputs/PropertiesAutoCom
 import useContracts from "../hooks/useContracts.tsx";
 import RentersAutoComplete from "../../../components/inputs/RentersAutoComplete.tsx";
 import { CreatePropertyContractProps } from "../services/postContract.ts";
+import DatePicker from "../../../components/inputs/DatePicker.tsx";
 
 function ContractsForm() {
   const [values] = useContracts();
@@ -20,14 +21,24 @@ function ContractsForm() {
   const [formik] = useForm({
     initialValues:
       values.contract ||
-      ({} as { property: string; renter: string; document: string }),
+      ({} as {
+        property: string;
+        renter: string;
+        document: string;
+        expiresAt: string;
+      }),
     enableReinitialize: true,
     validate: (values) => {
-      let errors: { property?: string; renter?: string; document?: string } =
-        {};
+      let errors: {
+        property?: string;
+        renter?: string;
+        document?: string;
+        expiresAt?: string;
+      } = {};
       errors.property = required(values.property as string);
       errors.renter = required(values.renter as string);
       errors.document = required(values.document);
+      errors.expiresAt = required(values.expiresAt);
 
       if (!compact(Object.values(errors)).length) {
         errors = {};
@@ -79,6 +90,24 @@ function ContractsForm() {
                   value={formik.values.renter}
                   onChange={(value) => formik.setFieldValue("renter", value)}
                   helperText={formik.touched.renter ? formik.errors.renter : ""}
+                />
+              ),
+              sm: 6,
+              xs: 12,
+            },
+            {
+              item: (
+                <DatePicker
+                  name="expiresAt"
+                  label="Data de expiração"
+                  error={
+                    formik.touched.expiresAt && Boolean(formik.errors.expiresAt)
+                  }
+                  value={formik.values.expiresAt}
+                  onChange={(value) => formik.setFieldValue("expiresAt", value)}
+                  helperText={
+                    formik.touched.expiresAt ? formik.errors.expiresAt : ""
+                  }
                 />
               ),
               sm: 6,

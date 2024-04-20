@@ -15,5 +15,6 @@ export default interface PropertyContract extends BaseModel {
   document: string;
   owner: string | User;
   renter: Renter | string;
+  expiresAt: string;
   property: Property | string;
 }
