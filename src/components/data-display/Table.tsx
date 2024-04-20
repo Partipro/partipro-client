@@ -30,14 +30,19 @@ function Table<D extends object>({ datasource, columns, noData }: Props<D>) {
   if (!datasource.length) {
     return (
       <FlexRow
-        sx={{ background: "#ffffff", width: "100%", maxHeight: "160px" }}
+        sx={{
+          background: "#ffffff",
+          width: "100%",
+          padding: "10px",
+          borderRadius: "8px",
+        }}
       >
         <FlexColumn sx={{ gap: "10px", width: "100%" }} justified aligned>
-          <FindInPageIcon sx={{ color: "#A5A5A5", fontSize: "40px" }} />
+          <FindInPageIcon sx={{ color: "#A5A5A5", fontSize: "34px" }} />
           <Text
             type="secondary"
             weight="strong"
-            size="large"
+            size="medium"
             label={noData?.title || "Nenhum registro encontrado"}
           />
           {noData?.action}
@@ -87,7 +92,7 @@ function Table<D extends object>({ datasource, columns, noData }: Props<D>) {
                     width={column.width}
                     scope="row"
                   >
-                    {(row[column?.dataKey || ("" as keyof D)] as
+                    {(row[(column?.dataKey as keyof D) || ("" as keyof D)] as
                       | string
                       | number) || column.render?.(row)}
                   </TableCell>
