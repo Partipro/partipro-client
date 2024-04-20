@@ -10,6 +10,7 @@ type Props = {
   open: boolean;
   onClose: () => void;
   title?: string;
+  isAlert?: boolean;
   children?: React.ReactNode;
   saveButton?:
     | {
@@ -29,6 +30,7 @@ function Dialog({
   title,
   children,
   onClose,
+  isAlert = false,
   width = "md",
   saveButton = { label: "Save" },
   cancelButton = { label: "Cancel" },
@@ -59,6 +61,9 @@ function Dialog({
             <Button
               onClick={() => {
                 (saveButton as { onClick?: () => void })?.onClick?.();
+                if (isAlert) {
+                  onClose();
+                }
               }}
               htmlType="submit"
               label={(saveButton as { label: string }).label || "Save"}

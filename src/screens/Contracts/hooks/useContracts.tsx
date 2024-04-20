@@ -11,12 +11,17 @@ import postContract, {
 } from "../services/postContract.ts";
 import { useNotification } from "../../../context/NotificationContext.tsx";
 import useMutation from "../../../hooks/core/useMutation.tsx";
+import cancelContract from "../services/cancelContract.ts";
+import { Text } from "../../../components/data-display/Typography.tsx";
+import Renter from "../../../models/Renter.ts";
 
 type UseContractsProps = {
   contracts?: Paginated<PropertyContract>;
   contract?: PropertyContract;
   createContract: (data: CreatePropertyContractProps) => void;
   fetchContracts: (data: ContractsSearchParams) => void;
+  handleCancelContract: (contractId: string) => void;
+  handleSendContract: (contract: PropertyContract) => void;
 };
 
 function useContracts() {
@@ -29,7 +34,7 @@ function useContracts() {
   });
   const [searchParams, setSearchParams] = useState({});
 
-  const { notification } = useNotification();
+  const { notification, dialog } = useNotification();
 
   const { data: contracts, refetch: fetchContracts } = useQuery({
     autoStart: true,
@@ -58,6 +63,18 @@ function useContracts() {
     },
   });
 
+  const [doCancel] = useMutation({
+    service: cancelContract,
+    onSuccess: () => {
+      fetchContracts();
+      notification({
+        message: "Contrato cancelado com sucesso",
+        type: "success",
+      });
+      navigate("/contracts");
+    },
+  });
+
   const createContract = (values: CreatePropertyContractProps) => {
     doCreate.mutate(values);
   };
@@ -71,12 +88,52 @@ function useContracts() {
     setSearchParams(data);
   };
 
+  const handleCancelContract = (contractId: string) => {
+    dialog({
+      saveButton: {
+        onClick: () => {
+          doCancel.mutate(contractId);
+        },
+        label: "Confirmar",
+      },
+      content: (
+        <Text label="Você tem certeza que deseja cancelar este contrato?" />
+      ),
+      cancelButton: {
+        label: "Cancelar",
+      },
+    });
+  };
+
+  const handleSendContract = (contract: PropertyContract) => {
+    dialog({
+      saveButton: {
+        onClick: () => {
+          // TODO chamar service para enviar contrato para o email do inquilino
+        },
+        label: "Confirmar",
+      },
+      content: (
+        <Text
+          label={`Você tem certeza que deseja enviar o contrato para o inquilino? (${
+            (contract.renter as Renter).name
+          })`}
+        />
+      ),
+      cancelButton: {
+        label: "Cancelar",
+      },
+    });
+  };
+
   const values = useMemo<UseContractsProps>(
     () => ({
       contracts,
       // contract,
       fetchContracts: handleFetchContracts,
       createContract,
+      handleCancelContract,
+      handleSendContract,
     }),
     [contracts],
   );

@@ -85,6 +85,7 @@ function NotificationContextProvider({
       ) : null}
       <Dialog
         open={!!dialogData}
+        isAlert
         saveButton={dialogData?.saveButton}
         cancelButton={dialogData?.cancelButton}
         width="sm"
