@@ -8,10 +8,12 @@ function useQuery<R, F>({
   queryKey,
   service,
   autoStart = true,
+  queryHash,
 }: {
   queryKey?: [keyof F, F[keyof F] | undefined];
   service: (filters?: F[keyof F]) => Promise<R>;
   autoStart?: boolean;
+  queryHash?: string;
 }): {
   isLoading: boolean;
   data: R | undefined;
@@ -22,6 +24,7 @@ function useQuery<R, F>({
 } {
   const { isLoading, data, refetch, isSuccess, isError, error } = reactUseQuery(
     {
+      queryHash,
       queryKey: [queryKey],
       queryFn: () => service(queryKey?.[1]),
       enabled: autoStart,
