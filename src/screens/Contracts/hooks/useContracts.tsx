@@ -14,6 +14,7 @@ import useMutation from "../../../hooks/core/useMutation.tsx";
 import cancelContract from "../services/cancelContract.ts";
 import { Text } from "../../../components/data-display/Typography.tsx";
 import Renter from "../../../models/Renter.ts";
+import sendContract from "../services/sendContract.ts";
 
 type UseContractsProps = {
   contracts?: Paginated<PropertyContract>;
@@ -63,6 +64,16 @@ function useContracts() {
     },
   });
 
+  const [doSendContract] = useMutation({
+    service: sendContract,
+    onSuccess: () => {
+      notification({
+        message: "Contrato enviado com sucesso",
+        type: "success",
+      });
+    },
+  });
+
   const [doCancel] = useMutation({
     service: cancelContract,
     onSuccess: () => {
@@ -109,7 +120,7 @@ function useContracts() {
     dialog({
       saveButton: {
         onClick: () => {
-          // TODO chamar service para enviar contrato para o email do inquilino
+          doSendContract.mutate(contract._id);
         },
         label: "Confirmar",
       },
