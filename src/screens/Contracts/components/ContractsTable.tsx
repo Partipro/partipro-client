@@ -42,10 +42,16 @@ function ContractsTable({ contracts }: { contracts: PropertyContract[] }) {
               color={
                 {
                   [PropertyContractStatus.ACTIVE]: "success",
+                  [PropertyContractStatus.DRAFT]: "default",
                   [PropertyContractStatus.AWAITING_SIGN]: "info",
                   [PropertyContractStatus.EXPIRED]: "warning",
                   [PropertyContractStatus.CANCELED]: "error",
-                }[row.status] as "success" | "info" | "warning" | "error"
+                }[row.status] as
+                  | "success"
+                  | "info"
+                  | "warning"
+                  | "error"
+                  | "default"
               }
             />
           ),
@@ -81,26 +87,31 @@ function ContractsTable({ contracts }: { contracts: PropertyContract[] }) {
           width: 90,
           title: "Ações",
           align: "center",
-          render: (row) =>
-            row.status !== PropertyContractStatus.CANCELED && (
-              <FlexRow sx={{ gap: "10px" }}>
-                <IconButton
-                  size="small"
-                  icon={<PictureAsPdfOutlined />}
-                  onClick={() => handleOpenContract(row.document)}
-                />
-                <IconButton
-                  icon={<EmailOutlined />}
-                  size="small"
-                  onClick={() => values?.handleSendContract(row)}
-                />
+          render: (row) => (
+            <FlexRow sx={{ gap: "10px" }} justified>
+              <IconButton
+                size="small"
+                icon={<PictureAsPdfOutlined />}
+                onClick={() => handleOpenContract(row.document)}
+              />
+              {row.status !== PropertyContractStatus.CANCELED && (
                 <IconButton
                   icon={<CancelOutlined />}
                   size="small"
                   onClick={() => values?.handleCancelContract(row._id)}
                 />
-              </FlexRow>
-            ),
+              )}
+              {row.status === PropertyContractStatus.DRAFT && (
+                <>
+                  <IconButton
+                    icon={<EmailOutlined />}
+                    size="small"
+                    onClick={() => values?.handleSendContract(row)}
+                  />
+                </>
+              )}
+            </FlexRow>
+          ),
         },
       ]}
     />

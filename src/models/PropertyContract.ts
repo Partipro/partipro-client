@@ -8,6 +8,7 @@ export enum PropertyContractStatus {
   ACTIVE = "ACTIVE",
   EXPIRED = "EXPIRED",
   CANCELED = "CANCELED",
+  DRAFT = "DRAFT",
 }
 
 export default interface PropertyContract extends BaseModel {

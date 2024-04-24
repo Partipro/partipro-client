@@ -64,6 +64,7 @@ function ContractsForm() {
       open
       onClose={() => navigate(-1)}
       saveButton={{
+        loading: values.isCreating,
         onClick: () => formik.submitForm(),
       }}
     >

@@ -2,7 +2,7 @@ import MuiChip from "@mui/material/Chip";
 
 type Props = {
   label: string;
-  color: "success" | "primary" | "error" | "info" | "warning";
+  color: "success" | "primary" | "error" | "info" | "warning" | "default";
 };
 
 function Chip(props: Props) {

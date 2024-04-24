@@ -16,6 +16,7 @@ type Props = {
     | {
         label?: string;
         onClick?: () => void;
+        loading?: boolean;
       }
     | boolean;
   cancelButton?:
@@ -32,7 +33,7 @@ function Dialog({
   onClose,
   isAlert = false,
   width = "md",
-  saveButton = { label: "Save" },
+  saveButton = { label: "Save", loading: false },
   cancelButton = { label: "Cancel" },
   ...props
 }: Props) {
@@ -65,6 +66,7 @@ function Dialog({
                   onClose();
                 }
               }}
+              loading={(saveButton as { loading: boolean }).loading}
               htmlType="submit"
               label={(saveButton as { label: string }).label || "Save"}
             />

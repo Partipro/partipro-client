@@ -17,6 +17,7 @@ import Renter from "../../../models/Renter.ts";
 import sendContract from "../services/sendContract.ts";
 
 type UseContractsProps = {
+  isCreating?: boolean;
   contracts?: Paginated<PropertyContract>;
   contract?: PropertyContract;
   createContract: (data: CreatePropertyContractProps) => void;
@@ -67,6 +68,7 @@ function useContracts() {
   const [doSendContract] = useMutation({
     service: sendContract,
     onSuccess: () => {
+      fetchContracts();
       notification({
         message: "Contrato enviado com sucesso",
         type: "success",
@@ -141,12 +143,13 @@ function useContracts() {
     () => ({
       contracts,
       // contract,
+      isCreating: doCreate.isLoading,
       fetchContracts: handleFetchContracts,
       createContract,
       handleCancelContract,
       handleSendContract,
     }),
-    [contracts],
+    [contracts, doCreate.isLoading],
   );
 
   return [values];
