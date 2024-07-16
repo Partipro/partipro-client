@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexRow from "../../../components/layout/FlexRow.tsx";
 import FlexColumn from "../../../components/layout/FlexColumn.tsx";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.jpg";
 import UseMediaQuery, {
   MEDIA_QUERY_BREAKPOINTS,
 } from "../../../hooks/core/useMediaQuery.tsx";
@@ -73,7 +73,7 @@ function AuthenticationWrapper({ children }: { children?: React.ReactNode }) {
       </FlexColumn>
       {isDesktop && (
         <FlexColumn aligned justified sx={{ width: "50%" }}>
-          <img src={logo} style={{ width: "300px" }} />
+          LOGO
         </FlexColumn>
       )}
     </FlexRow>
